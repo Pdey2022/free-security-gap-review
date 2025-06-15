@@ -16,7 +16,7 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
-  
+
   const navigate = useNavigate();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
@@ -63,7 +63,7 @@ const ResetPassword = () => {
 
       toast({
         title: "Password Reset Successful!",
-        description: "Your password has been successfully updated.",
+        description: "Your password has been successfully updated."
       });
 
       // Redirect to signin page after successful password reset
@@ -108,13 +108,13 @@ const ResetPassword = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 pr-10 h-12"
-                    required
-                  />
+                    required />
+
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
@@ -133,47 +133,47 @@ const ResetPassword = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="pl-10 pr-10 h-12"
-                    required
-                  />
+                    required />
+
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+
                     {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
 
-              {error && (
-                <Alert className="border-red-200 bg-red-50">
+              {error &&
+              <Alert className="border-red-200 bg-red-50">
                   <AlertDescription className="text-red-700">{error}</AlertDescription>
                 </Alert>
-              )}
+              }
 
               <Button
                 type="submit"
                 className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium"
-                disabled={isLoading || !token}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
+                disabled={isLoading || !token}>
+
+                {isLoading ?
+                <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     Resetting password...
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
+                  </div> :
+
+                <div className="flex items-center gap-2">
                     Reset password
                     <ArrowRight className="w-4 h-4" />
                   </div>
-                )}
+                }
               </Button>
             </form>
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ResetPassword;

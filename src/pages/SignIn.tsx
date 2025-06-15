@@ -14,7 +14,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -35,7 +35,7 @@ const SignIn = () => {
 
       toast({
         title: "Welcome back!",
-        description: "You have successfully signed in.",
+        description: "You have successfully signed in."
       });
 
       // Redirect to home page after successful login
@@ -65,7 +65,7 @@ const SignIn = () => {
 
       toast({
         title: "Reset email sent!",
-        description: "Please check your email for password reset instructions.",
+        description: "Please check your email for password reset instructions."
       });
     } catch (error) {
       console.error('Reset password error:', error);
@@ -105,8 +105,8 @@ const SignIn = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 h-12"
-                    required
-                  />
+                    required />
+
                 </div>
               </div>
 
@@ -123,13 +123,13 @@ const SignIn = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 pr-10 h-12"
-                    required
-                  />
+                    required />
+
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
@@ -139,44 +139,44 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={handleForgotPassword}
-                  className="text-sm text-blue-600 hover:text-blue-500 transition-colors"
-                >
+                  className="text-sm text-blue-600 hover:text-blue-500 transition-colors">
+
                   Forgot your password?
                 </button>
               </div>
 
-              {error && (
-                <Alert className="border-red-200 bg-red-50">
+              {error &&
+              <Alert className="border-red-200 bg-red-50">
                   <AlertDescription className="text-red-700">{error}</AlertDescription>
                 </Alert>
-              )}
+              }
 
               <Button
                 type="submit"
                 className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
+                disabled={isLoading}>
+
+                {isLoading ?
+                <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     Signing in...
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
+                  </div> :
+
+                <div className="flex items-center gap-2">
                     Sign in
                     <ArrowRight className="w-4 h-4" />
                   </div>
-                )}
+                }
               </Button>
             </form>
 
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
-                <Link 
-                  to="/signup" 
-                  className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
-                >
+                <Link
+                  to="/signup"
+                  className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+
                   Sign up
                 </Link>
               </p>
@@ -184,8 +184,8 @@ const SignIn = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default SignIn;

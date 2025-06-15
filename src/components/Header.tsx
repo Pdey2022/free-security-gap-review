@@ -7,8 +7,8 @@ import { useToast } from '@/hooks/use-toast';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState<{ Name?: string; Email?: string } | null>(null);
-  
+  const [userInfo, setUserInfo] = useState<{Name?: string;Email?: string;} | null>(null);
+
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -38,22 +38,22 @@ const Header = () => {
       if (error) {
         console.error('Logout error:', error);
       }
-      
+
       setIsLoggedIn(false);
       setUserInfo(null);
-      
+
       toast({
         title: "Logged out successfully",
-        description: "You have been signed out of your account.",
+        description: "You have been signed out of your account."
       });
-      
+
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
       toast({
         title: "Logout failed",
         description: "There was an error logging you out. Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
@@ -90,8 +90,8 @@ const Header = () => {
 
             {/* Authentication Buttons */}
             <div className="flex items-center space-x-4 ml-8">
-              {isLoggedIn ? (
-                <div className="flex items-center space-x-4">
+              {isLoggedIn ?
+              <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <User className="w-4 h-4 text-blue-200" />
                     <span className="text-sm text-blue-100">
@@ -99,37 +99,37 @@ const Header = () => {
                     </span>
                   </div>
                   <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white"
-                  >
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white">
+
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
                   </Button>
-                </div>
-              ) : (
-                <>
+                </div> :
+
+              <>
                   <Link to="/signin">
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-blue-100 hover:bg-white/10 hover:text-white"
-                    >
+                    variant="ghost"
+                    size="sm"
+                    className="text-blue-100 hover:bg-white/10 hover:text-white">
+
                       Sign In
                     </Button>
                   </Link>
                   <Link to="/signup">
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white"
-                    >
+                    variant="outline"
+                    size="sm"
+                    className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white">
+
                       Sign Up
                     </Button>
                   </Link>
                 </>
-              )}
+              }
             </div>
           </nav>
 
@@ -138,21 +138,21 @@ const Header = () => {
             variant="ghost"
             size="sm"
             className="md:hidden text-white hover:bg-white/10"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+            onClick={() => setIsMenuOpen(!isMenuOpen)}>
+
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </Button>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-blue-700">
+        {isMenuOpen &&
+        <div className="md:hidden py-4 border-t border-blue-700">
             <nav className="flex flex-col space-y-3">
-              <Link 
-                to="/" 
-                className="text-blue-100 hover:text-white transition-colors duration-200 font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link
+              to="/"
+              className="text-blue-100 hover:text-white transition-colors duration-200 font-medium py-2"
+              onClick={() => setIsMenuOpen(false)}>
+
                 Assessment
               </Link>
               <a href="#" className="text-blue-100 hover:text-white transition-colors duration-200 font-medium py-2">
@@ -167,8 +167,8 @@ const Header = () => {
               
               {/* Mobile Authentication */}
               <div className="border-t border-blue-700 pt-4 space-y-3">
-                {isLoggedIn ? (
-                  <>
+                {isLoggedIn ?
+              <>
                     <div className="flex items-center space-x-2 py-2">
                       <User className="w-4 h-4 text-blue-200" />
                       <span className="text-sm text-blue-100">
@@ -176,47 +176,47 @@ const Header = () => {
                       </span>
                     </div>
                     <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        handleLogout();
-                        setIsMenuOpen(false);
-                      }}
-                      className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white w-full"
-                    >
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white w-full">
+
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out
                     </Button>
-                  </>
-                ) : (
-                  <>
+                  </> :
+
+              <>
                     <Link to="/signin" onClick={() => setIsMenuOpen(false)}>
                       <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-blue-100 hover:bg-white/10 hover:text-white w-full"
-                      >
+                    variant="ghost"
+                    size="sm"
+                    className="text-blue-100 hover:bg-white/10 hover:text-white w-full">
+
                         Sign In
                       </Button>
                     </Link>
                     <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
                       <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white w-full"
-                      >
+                    variant="outline"
+                    size="sm"
+                    className="border-blue-300 text-blue-100 hover:bg-blue-700 hover:text-white w-full">
+
                         Sign Up
                       </Button>
                     </Link>
                   </>
-                )}
+              }
               </div>
             </nav>
           </div>
-        )}
+        }
       </div>
-    </header>
-  );
+    </header>);
+
 };
 
 export default Header;

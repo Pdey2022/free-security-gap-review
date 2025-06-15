@@ -93,23 +93,6 @@ const SecurityAssessment: React.FC = () => {
     }));
   };
 
-  const getRecommendations = () => {
-    const gaps: string[] = [];
-
-    securityDomains.forEach((domain) => {
-      domain.questions.forEach((question) => {
-        const answer = assessmentState.answers[question.id];
-        if (!answer || answer.value === 'no' || answer.value === 'partial' && (question.weight || 1) >= 2) {
-          gaps.push(domain.id);
-        }
-      });
-    });
-
-    // Use the updated recommendation function with smart prioritization
-    const allRecommendations = recommendationDatabase(assessmentState.answers);
-    return allRecommendations.filter((rec) => gaps.includes(rec.domain));
-  };
-
   const currentMaturity = calculateMaturityLevel();
 
   return (
@@ -234,8 +217,7 @@ const SecurityAssessment: React.FC = () => {
 
           <TabsContent value="recommendations">
             <RecommendationsView
-              recommendations={getRecommendations()}
-              answers={assessmentState.answers} />
+              assessmentState={assessmentState} />
           </TabsContent>
         </Tabs>
       </div>

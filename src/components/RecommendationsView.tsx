@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Clock, Shield, AlertTriangle, CheckCircle, Calendar } from 'lucide-react';
+import { Clock, Shield, AlertTriangle, CheckCircle, Calendar, Database, Loader2 } from 'lucide-react';
 import { AssessmentState, Recommendation } from '@/types/assessment';
 import { securityDomains } from '@/data/securityDomains';
 import NISTMaturityChart from './NISTMaturityChart';
 import { recommendationDatabase } from '@/data/recommendations-db';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface RecommendationsViewProps {
   assessmentState: AssessmentState;
@@ -15,6 +17,9 @@ interface RecommendationsViewProps {
 const RecommendationsView: React.FC<RecommendationsViewProps> = ({ assessmentState }) => {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [debugInfo, setDebugInfo] = useState<string>('');
+  const { toast } = useToast();
 
   useEffect(() => {
     loadRecommendations();
@@ -23,24 +28,79 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({ assessmentSta
   const loadRecommendations = async () => {
     try {
       setIsLoading(true);
+      setError(null);
+      setDebugInfo('Starting recommendation loading...');
+      
       console.log('Loading recommendations with assessment state:', assessmentState);
 
       const recs = await recommendationDatabase(assessmentState.answers);
       setRecommendations(recs);
+      setDebugInfo(`Loaded ${recs.length} recommendations successfully`);
+      
       console.log('Loaded recommendations:', recs);
+      
+      if (recs.length === 0) {
+        setDebugInfo('No recommendations returned from database');
+      }
+      
     } catch (error) {
       console.error('Error loading recommendations:', error);
+      setError(error instanceof Error ? error.message : 'Unknown error occurred');
+      setDebugInfo(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      
       // If there's an error, try to load static recommendations as fallback
       try {
         const { recommendationDatabase: staticRecommendations } = await import('@/data/recommendations');
         const fallbackRecs = staticRecommendations(assessmentState.answers);
         setRecommendations(fallbackRecs);
+        setDebugInfo(`Fallback: Loaded ${fallbackRecs.length} static recommendations`);
+        
+        toast({
+          title: "Using Fallback Recommendations",
+          description: "Database recommendations failed, using static recommendations instead.",
+          variant: "default"
+        });
       } catch (fallbackError) {
         console.error('Error loading fallback recommendations:', fallbackError);
         setRecommendations([]);
+        setDebugInfo(`Both database and static recommendations failed`);
+        setError('Failed to load any recommendations');
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const checkDatabaseStatus = async () => {
+    try {
+      setDebugInfo('Checking database status...');
+      const { data, error } = await window.ezsite.apis.tablePage(17255, {
+        PageNo: 1,
+        PageSize: 5,
+        OrderByField: 'ID',
+        IsAsc: false,
+        Filters: []
+      });
+      
+      if (error) {
+        setDebugInfo(`Database error: ${error}`);
+        toast({
+          title: "Database Error", 
+          description: error,
+          variant: "destructive"
+        });
+      } else {
+        const count = data?.VirtualCount || 0;
+        setDebugInfo(`Database has ${count} total recommendations`);
+        toast({
+          title: "Database Status",
+          description: `Found ${count} recommendations in database`,
+          variant: "default"
+        });
+      }
+    } catch (error) {
+      console.error('Error checking database:', error);
+      setDebugInfo(`Database check failed: ${error}`);
     }
   };
 
@@ -87,9 +147,19 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({ assessmentSta
   const mediumPriorityRecommendations = recommendations.filter((r) => r.priority === 'medium');
   const lowPriorityRecommendations = recommendations.filter((r) => r.priority === 'low');
 
+  const answeredQuestions = Object.keys(assessmentState.answers).length;
+
   if (isLoading) {
     return (
       <div className="space-y-6">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" />
+          <h2 className="text-2xl font-bold">Loading Recommendations</h2>
+          <p className="text-gray-600">Analyzing your assessment responses...</p>
+          <div className="text-sm text-gray-500 bg-gray-50 p-3 rounded">
+            Debug: {debugInfo}
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) =>
           <Card key={i}>
@@ -108,6 +178,39 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({ assessmentSta
 
   }
 
+  // Show message if no questions have been answered yet
+  if (answeredQuestions === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-bold">Security Recommendations</h2>
+          <p className="text-gray-600">
+            Answer assessment questions to receive personalized recommendations
+          </p>
+        </div>
+        
+        <Card>
+          <CardContent className="p-12 text-center">
+            <Shield className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Complete the Assessment First</h3>
+            <p className="text-gray-600 mb-4">
+              Start by answering questions in the Assessment tab to receive customized security recommendations.
+            </p>
+            <div className="space-y-2">
+              <Button onClick={checkDatabaseStatus} variant="outline" size="sm">
+                <Database className="h-4 w-4 mr-2" />
+                Check Database Status
+              </Button>
+              <div className="text-sm text-gray-500 bg-gray-50 p-3 rounded">
+                Debug: {debugInfo}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
@@ -115,16 +218,52 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({ assessmentSta
         <p className="text-gray-600">
           Based on your assessment, here are personalized recommendations to improve your security posture
         </p>
+        <div className="text-sm text-gray-500 bg-gray-50 p-3 rounded">
+          Debug: {debugInfo} | Answered questions: {answeredQuestions}
+        </div>
+        <Button onClick={checkDatabaseStatus} variant="outline" size="sm">
+          <Database className="h-4 w-4 mr-2" />
+          Check Database Status
+        </Button>
       </div>
+
+      {error && (
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-red-700">
+              <AlertTriangle className="h-4 w-4" />
+              <span className="font-medium">Error loading recommendations</span>
+            </div>
+            <p className="text-red-600 text-sm mt-1">{error}</p>
+            <Button onClick={loadRecommendations} size="sm" className="mt-2">
+              Retry Loading
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {recommendations.length === 0 ?
       <Card>
           <CardContent className="p-12 text-center">
             <Shield className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No recommendations available</h3>
-            <p className="text-gray-600">
-              Complete the security assessment to receive personalized recommendations.
+            <p className="text-gray-600 mb-4">
+              This could mean:
             </p>
+            <ul className="text-left text-gray-600 space-y-1 mb-4">
+              <li>• The recommendations database needs to be seeded</li>
+              <li>• All assessment areas are already well-secured</li>
+              <li>• More assessment answers are needed for analysis</li>
+            </ul>
+            <div className="space-y-2">
+              <Button onClick={loadRecommendations} size="sm">
+                Reload Recommendations
+              </Button>
+              <Button onClick={checkDatabaseStatus} variant="outline" size="sm">
+                <Database className="h-4 w-4 mr-2" />
+                Check Database
+              </Button>
+            </div>
           </CardContent>
         </Card> :
 
