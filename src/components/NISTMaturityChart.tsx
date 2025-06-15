@@ -75,86 +75,86 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" data-id="ghnqgl75k" data-path="src/components/NISTMaturityChart.tsx">
       {/* NIST Functions Bar Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>NIST Cybersecurity Framework Functions</CardTitle>
-          <CardDescription>
+      <Card data-id="p7qj5pl54" data-path="src/components/NISTMaturityChart.tsx">
+        <CardHeader data-id="oskaz88o6" data-path="src/components/NISTMaturityChart.tsx">
+          <CardTitle data-id="ezwra8d8a" data-path="src/components/NISTMaturityChart.tsx">NIST Cybersecurity Framework Functions</CardTitle>
+          <CardDescription data-id="uo7k208nk" data-path="src/components/NISTMaturityChart.tsx">
             Maturity assessment mapped to the five NIST CSF functions
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 100]} />
+        <CardContent data-id="ife6cb4dt" data-path="src/components/NISTMaturityChart.tsx">
+          <ResponsiveContainer width="100%" height={300} data-id="nziwfgd93" data-path="src/components/NISTMaturityChart.tsx">
+            <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }} data-id="x17xgwrf4" data-path="src/components/NISTMaturityChart.tsx">
+              <CartesianGrid strokeDasharray="3 3" data-id="nw5ehktmm" data-path="src/components/NISTMaturityChart.tsx" />
+              <XAxis dataKey="name" data-id="n5jmzxlfz" data-path="src/components/NISTMaturityChart.tsx" />
+              <YAxis domain={[0, 100]} data-id="elypp7i3e" data-path="src/components/NISTMaturityChart.tsx" />
               <Tooltip
                 formatter={(value: number) => [`${value}%`, 'Maturity Score']}
-                labelFormatter={(label) => `NIST Function: ${label}`} />
+                labelFormatter={(label) => `NIST Function: ${label}`} data-id="h7t6xu2sr" data-path="src/components/NISTMaturityChart.tsx" />
 
-              <Bar dataKey="score" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="score" fill="#3b82f6" radius={[4, 4, 0, 0]} data-id="f2p0yrklp" data-path="src/components/NISTMaturityChart.tsx" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       {/* NIST Functions Radar Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>NIST Framework Radar View</CardTitle>
-          <CardDescription>
+      <Card data-id="keo86xklp" data-path="src/components/NISTMaturityChart.tsx">
+        <CardHeader data-id="an9myzsq7" data-path="src/components/NISTMaturityChart.tsx">
+          <CardTitle data-id="nbu7ikyda" data-path="src/components/NISTMaturityChart.tsx">NIST Framework Radar View</CardTitle>
+          <CardDescription data-id="hzfmoq0k5" data-path="src/components/NISTMaturityChart.tsx">
             360-degree view of cybersecurity maturity across all functions
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <RadarChart data={nistData}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="function" />
-              <PolarRadiusAxis domain={[0, 100]} tick={false} />
+        <CardContent data-id="imwmk1dcl" data-path="src/components/NISTMaturityChart.tsx">
+          <ResponsiveContainer width="100%" height={300} data-id="jmxcf79yg" data-path="src/components/NISTMaturityChart.tsx">
+            <RadarChart data={nistData} data-id="aimkpd5xq" data-path="src/components/NISTMaturityChart.tsx">
+              <PolarGrid data-id="wxryx1b36" data-path="src/components/NISTMaturityChart.tsx" />
+              <PolarAngleAxis dataKey="function" data-id="xdfkffe96" data-path="src/components/NISTMaturityChart.tsx" />
+              <PolarRadiusAxis domain={[0, 100]} tick={false} data-id="6ba3gfdjm" data-path="src/components/NISTMaturityChart.tsx" />
               <Radar
                 name="Maturity Score"
                 dataKey="score"
                 stroke="#3b82f6"
                 fill="#3b82f6"
                 fillOpacity={0.3}
-                strokeWidth={2} />
+                strokeWidth={2} data-id="em3ny4iv3" data-path="src/components/NISTMaturityChart.tsx" />
 
-              <Tooltip formatter={(value: number) => [`${value}%`, 'Maturity Score']} />
+              <Tooltip formatter={(value: number) => [`${value}%`, 'Maturity Score']} data-id="cqe6glhha" data-path="src/components/NISTMaturityChart.tsx" />
             </RadarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       {/* NIST Functions Breakdown */}
-      <Card className="lg:col-span-2">
-        <CardHeader>
-          <CardTitle>NIST Function Maturity Breakdown</CardTitle>
-          <CardDescription>
+      <Card className="lg:col-span-2" data-id="8sg4rigs5" data-path="src/components/NISTMaturityChart.tsx">
+        <CardHeader data-id="nploalb51" data-path="src/components/NISTMaturityChart.tsx">
+          <CardTitle data-id="dha2ayol0" data-path="src/components/NISTMaturityChart.tsx">NIST Function Maturity Breakdown</CardTitle>
+          <CardDescription data-id="nm5k5onbc" data-path="src/components/NISTMaturityChart.tsx">
             Detailed maturity levels for each NIST Cybersecurity Framework function
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <CardContent data-id="8ertbohy0" data-path="src/components/NISTMaturityChart.tsx">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4" data-id="zesihb9t0" data-path="src/components/NISTMaturityChart.tsx">
             {nistFunctions.map((func) => {
               const score = Math.round(calculateNISTFunctionScore(func));
               const maturityLevel = getMaturityLevel(score);
               const colorClass = getMaturityColor(score);
 
               return (
-                <div key={func.id} className="text-center space-y-2">
-                  <div className="flex flex-col items-center">
-                    <div className={`w-16 h-16 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-lg mb-2`}>
+                <div key={func.id} className="text-center space-y-2" data-id="vzyxw93m0" data-path="src/components/NISTMaturityChart.tsx">
+                  <div className="flex flex-col items-center" data-id="r2qo6btam" data-path="src/components/NISTMaturityChart.tsx">
+                    <div className={`w-16 h-16 rounded-full ${colorClass} flex items-center justify-center text-white font-bold text-lg mb-2`} data-id="548rpwz41" data-path="src/components/NISTMaturityChart.tsx">
                       {score}%
                     </div>
-                    <h3 className="font-semibold text-sm">{func.name}</h3>
-                    <Badge variant="outline" className="text-xs">
+                    <h3 className="font-semibold text-sm" data-id="lu8id3fxj" data-path="src/components/NISTMaturityChart.tsx">{func.name}</h3>
+                    <Badge variant="outline" className="text-xs" data-id="sr1yux6qj" data-path="src/components/NISTMaturityChart.tsx">
                       {maturityLevel}
                     </Badge>
                   </div>
-                  <div className="text-xs text-slate-600">
+                  <div className="text-xs text-slate-600" data-id="m1ompk9hi" data-path="src/components/NISTMaturityChart.tsx">
                     {func.domains.map((domainId) => {
                       const domain = domains.find((d) => d.id === domainId);
                       return domain?.name || domainId;

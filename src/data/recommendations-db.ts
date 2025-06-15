@@ -6,19 +6,19 @@ const TABLE_ID = 17255; // Recommendations table ID
 export const getRecommendationsFromDB = async (answers: Record<string, any> = {}): Promise<Recommendation[]> => {
   try {
     console.log('Fetching recommendations from database...');
-    
+
     const { data, error } = await window.ezsite.apis.tablePage(TABLE_ID, {
       PageNo: 1,
       PageSize: 100,
       OrderByField: 'ID',
       IsAsc: false,
       Filters: [
-        {
-          name: 'is_active',
-          op: 'Equal',
-          value: true
-        }
-      ]
+      {
+        name: 'is_active',
+        op: 'Equal',
+        value: true
+      }]
+
     });
 
     if (error) {
@@ -50,14 +50,14 @@ export const getRecommendationsFromDB = async (answers: Record<string, any> = {}
 
     // Check for Defender EPP/EDR usage
     const hasDefender = Object.values(answers).some((answer) =>
-      answer.notes?.toLowerCase().includes('defender') ||
-      answer.notes?.toLowerCase().includes('microsoft defender')
+    answer.notes?.toLowerCase().includes('defender') ||
+    answer.notes?.toLowerCase().includes('microsoft defender')
     );
 
     // Check for Azure cloud usage
     const hasAzure = Object.values(answers).some((answer) =>
-      answer.notes?.toLowerCase().includes('azure') ||
-      answer.notes?.toLowerCase().includes('microsoft azure')
+    answer.notes?.toLowerCase().includes('azure') ||
+    answer.notes?.toLowerCase().includes('microsoft azure')
     );
 
     // Prioritize SIEM/Sentinel if Defender or Azure is detected
@@ -89,7 +89,7 @@ export const getRecommendationsFromDB = async (answers: Record<string, any> = {}
 // Fallback function that combines database and static recommendations
 export const recommendationDatabase = async (answers: Record<string, any> = {}): Promise<Recommendation[]> => {
   const dbRecommendations = await getRecommendationsFromDB(answers);
-  
+
   // If we have database recommendations, use them
   if (dbRecommendations.length > 0) {
     return dbRecommendations;
