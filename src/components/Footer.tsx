@@ -13,7 +13,7 @@ const Footer = () => {
                 <Shield className="w-6 h-6 text-white" data-id="hqm9ycvok" data-path="src/components/Footer.tsx" />
               </div>
               <div data-id="3b1mnisg5" data-path="src/components/Footer.tsx">
-                <h3 className="text-xl font-bold" data-id="985ejlwh7" data-path="src/components/Footer.tsx">CyberGuard Pro</h3>
+                <h3 className="text-xl font-bold" data-id="985ejlwh7" data-path="src/components/Footer.tsx">DeyLabs Security</h3>
                 <p className="text-sm text-slate-300" data-id="3tc005opz" data-path="src/components/Footer.tsx">Security Assessment Platform</p>
               </div>
             </div>
@@ -66,19 +66,19 @@ const Footer = () => {
             <ul className="space-y-3" data-id="nfr6j1v2g" data-path="src/components/Footer.tsx">
               <li className="flex items-center space-x-2 text-slate-300" data-id="8y1jckzzi" data-path="src/components/Footer.tsx">
                 <Mail className="w-4 h-4" data-id="818optlei" data-path="src/components/Footer.tsx" />
-                <span data-id="0x6calwmj" data-path="src/components/Footer.tsx">support@cyberguardpro.com</span>
+                <span data-id="0x6calwmj" data-path="src/components/Footer.tsx">PXXXX@deylabs.co.uk</span>
               </li>
               <li className="flex items-center space-x-2 text-slate-300" data-id="rla6i833y" data-path="src/components/Footer.tsx">
                 <Phone className="w-4 h-4" data-id="xxwsxxyiv" data-path="src/components/Footer.tsx" />
-                <span data-id="p11eksynb" data-path="src/components/Footer.tsx">+1 (555) 123-4567</span>
+                <span data-id="p11eksynb" data-path="src/components/Footer.tsx">+44 0000 0000</span>
               </li>
               <li className="flex items-center space-x-2 text-slate-300" data-id="y6lhc6r4m" data-path="src/components/Footer.tsx">
                 <MapPin className="w-4 h-4" data-id="c4iia4mdc" data-path="src/components/Footer.tsx" />
-                <span data-id="vyfoogcsr" data-path="src/components/Footer.tsx">San Francisco, CA</span>
+                <span data-id="vyfoogcsr" data-path="src/components/Footer.tsx" className="text-xl font-bold">London UK</span>
               </li>
               <li className="flex items-center space-x-2 text-slate-300" data-id="oxl78fzpj" data-path="src/components/Footer.tsx">
                 <Globe className="w-4 h-4" data-id="1xs7a1se3" data-path="src/components/Footer.tsx" />
-                <span data-id="cfiw4zj11" data-path="src/components/Footer.tsx">www.cyberguardpro.com</span>
+                <span data-id="cfiw4zj11" data-path="src/components/Footer.tsx">www.delylabs.co.uk</span>
               </li>
             </ul>
           </div>
