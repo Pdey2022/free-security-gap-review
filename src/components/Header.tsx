@@ -42,15 +42,15 @@ const Header = () => {
             variant="ghost"
             size="sm"
             className="md:hidden text-white hover:bg-white/10"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+            onClick={() => setIsMenuOpen(!isMenuOpen)}>
+
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </Button>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-blue-700">
+        {isMenuOpen &&
+        <div className="md:hidden py-4 border-t border-blue-700">
             <nav className="flex flex-col space-y-3">
               <a href="#" className="text-blue-100 hover:text-white transition-colors duration-200 font-medium py-2">
                 Assessment
@@ -66,10 +66,10 @@ const Header = () => {
               </a>
             </nav>
           </div>
-        )}
+        }
       </div>
-    </header>
-  );
+    </header>);
+
 };
 
 export default Header;
