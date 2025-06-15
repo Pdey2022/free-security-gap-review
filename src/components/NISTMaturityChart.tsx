@@ -10,16 +10,16 @@ interface NISTMaturityChartProps {
 }
 
 const nistFunctions = [
-{ id: 'identify', name: 'Identify', domains: ['governance', 'thirdparty', 'physical'] },
-{ id: 'protect', name: 'Protect', domains: ['iam', 'network', 'endpoint', 'application', 'data'] },
-{ id: 'detect', name: 'Detect', domains: ['operations', 'vulnerability'] },
-{ id: 'respond', name: 'Respond', domains: ['operations'] },
-{ id: 'recover', name: 'Recover', domains: ['physical', 'data'] }];
-
+  { id: 'identify', name: 'Identify', domains: ['governance', 'thirdparty', 'physical'] },
+  { id: 'protect', name: 'Protect', domains: ['iam', 'network', 'endpoint', 'application', 'data'] },
+  { id: 'detect', name: 'Detect', domains: ['operations', 'vulnerability'] },
+  { id: 'respond', name: 'Respond', domains: ['operations'] },
+  { id: 'recover', name: 'Recover', domains: ['physical', 'data'] }
+];
 
 const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers }) => {
   const calculateDomainScore = (domainId: string): number => {
-    const domain = domains.find((d) => d.id === domainId);
+    const domain = domains.find(d => d.id === domainId);
     if (!domain) return 0;
 
     const totalWeight = domain.questions.reduce((sum, q) => sum + (q.weight || 1), 0);
@@ -30,29 +30,29 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
       if (answer) {
         const weight = question.weight || 1;
         switch (answer.value) {
-          case 'yes':achievedScore += weight;break;
-          case 'partial':achievedScore += weight * 0.5;break;
-          case 'no':achievedScore += 0;break;
-          case 'na':break;
+          case 'yes': achievedScore += weight; break;
+          case 'partial': achievedScore += weight * 0.5; break;
+          case 'no': achievedScore += 0; break;
+          case 'na': break;
         }
       }
     });
 
-    return totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
+    return totalWeight > 0 ? (achievedScore / totalWeight) * 100 : 0;
   };
 
   const calculateNISTFunctionScore = (nistFunction: typeof nistFunctions[0]): number => {
-    const scores = nistFunction.domains.map((domainId) => calculateDomainScore(domainId));
+    const scores = nistFunction.domains.map(domainId => calculateDomainScore(domainId));
     return scores.length > 0 ? scores.reduce((sum, score) => sum + score, 0) / scores.length : 0;
   };
 
-  const nistData = nistFunctions.map((func) => ({
+  const nistData = nistFunctions.map(func => ({
     function: func.name,
     score: Math.round(calculateNISTFunctionScore(func)),
     fullMark: 100
   }));
 
-  const barData = nistData.map((item) => ({
+  const barData = nistData.map(item => ({
     name: item.function,
     score: item.score,
     color: item.score >= 80 ? '#22c55e' : item.score >= 60 ? '#eab308' : item.score >= 40 ? '#f97316' : '#ef4444'
@@ -90,10 +90,10 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis domain={[0, 100]} />
-              <Tooltip
+              <Tooltip 
                 formatter={(value: number) => [`${value}%`, 'Maturity Score']}
-                labelFormatter={(label) => `NIST Function: ${label}`} />
-
+                labelFormatter={(label) => `NIST Function: ${label}`}
+              />
               <Bar dataKey="score" fill="#3b82f6" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -120,8 +120,8 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
                 stroke="#3b82f6"
                 fill="#3b82f6"
                 fillOpacity={0.3}
-                strokeWidth={2} />
-
+                strokeWidth={2}
+              />
               <Tooltip formatter={(value: number) => [`${value}%`, 'Maturity Score']} />
             </RadarChart>
           </ResponsiveContainer>
@@ -142,7 +142,7 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
               const score = Math.round(calculateNISTFunctionScore(func));
               const maturityLevel = getMaturityLevel(score);
               const colorClass = getMaturityColor(score);
-
+              
               return (
                 <div key={func.id} className="text-center space-y-2">
                   <div className="flex flex-col items-center">
@@ -155,19 +155,19 @@ const NISTMaturityChart: React.FC<NISTMaturityChartProps> = ({ domains, answers 
                     </Badge>
                   </div>
                   <div className="text-xs text-slate-600">
-                    {func.domains.map((domainId) => {
-                      const domain = domains.find((d) => d.id === domainId);
+                    {func.domains.map(domainId => {
+                      const domain = domains.find(d => d.id === domainId);
                       return domain?.name || domainId;
                     }).join(', ')}
                   </div>
-                </div>);
-
+                </div>
+              );
             })}
           </div>
         </CardContent>
       </Card>
-    </div>);
-
+    </div>
+  );
 };
 
 export default NISTMaturityChart;
