@@ -34,24 +34,24 @@ const SecurityAssessment: React.FC = () => {
   // Calculate progress
   const totalQuestions = securityDomains.reduce((sum, domain) => sum + domain.questions.length, 0);
   const answeredQuestions = Object.keys(assessmentState.answers).length;
-  const overallProgress = (answeredQuestions / totalQuestions) * 100;
+  const overallProgress = answeredQuestions / totalQuestions * 100;
 
   // Calculate domain progress
   const getDomainProgress = (domainId: string) => {
-    const domain = securityDomains.find(d => d.id === domainId);
+    const domain = securityDomains.find((d) => d.id === domainId);
     if (!domain) return 0;
-    
-    const domainAnswers = domain.questions.filter(q => assessmentState.answers[q.id]);
-    return (domainAnswers.length / domain.questions.length) * 100;
+
+    const domainAnswers = domain.questions.filter((q) => assessmentState.answers[q.id]);
+    return domainAnswers.length / domain.questions.length * 100;
   };
 
   // Calculate maturity level
   const calculateMaturityLevel = (): MaturityLevel => {
-    const scores = securityDomains.map(domain => {
+    const scores = securityDomains.map((domain) => {
       const totalWeight = domain.questions.reduce((sum, q) => sum + (q.weight || 1), 0);
       let achievedScore = 0;
-      
-      domain.questions.forEach(question => {
+
+      domain.questions.forEach((question) => {
         const answer = assessmentState.answers[question.id];
         if (answer) {
           const weight = question.weight || 1;
@@ -63,12 +63,12 @@ const SecurityAssessment: React.FC = () => {
           }
         }
       });
-      
-      return totalWeight > 0 ? (achievedScore / totalWeight) * 100 : 0;
+
+      return totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
     });
 
     const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
-    
+
     if (averageScore >= 90) return maturityLevels[4];
     if (averageScore >= 75) return maturityLevels[3];
     if (averageScore >= 60) return maturityLevels[2];
@@ -77,7 +77,7 @@ const SecurityAssessment: React.FC = () => {
   };
 
   const updateAnswer = (questionId: string, answer: Answer) => {
-    setAssessmentState(prev => ({
+    setAssessmentState((prev) => ({
       ...prev,
       answers: {
         ...prev.answers,
@@ -87,7 +87,7 @@ const SecurityAssessment: React.FC = () => {
   };
 
   const setCurrentDomain = (domainId: string) => {
-    setAssessmentState(prev => ({
+    setAssessmentState((prev) => ({
       ...prev,
       currentDomain: domainId
     }));
@@ -95,17 +95,19 @@ const SecurityAssessment: React.FC = () => {
 
   const getRecommendations = () => {
     const gaps: string[] = [];
-    
-    securityDomains.forEach(domain => {
-      domain.questions.forEach(question => {
+
+    securityDomains.forEach((domain) => {
+      domain.questions.forEach((question) => {
         const answer = assessmentState.answers[question.id];
-        if (!answer || answer.value === 'no' || (answer.value === 'partial' && (question.weight || 1) >= 2)) {
+        if (!answer || answer.value === 'no' || answer.value === 'partial' && (question.weight || 1) >= 2) {
           gaps.push(domain.id);
         }
       });
     });
 
-    return recommendationDatabase.filter(rec => gaps.includes(rec.domain));
+    // Use the updated recommendation function with smart prioritization
+    const allRecommendations = recommendationDatabase(assessmentState.answers);
+    return allRecommendations.filter((rec) => gaps.includes(rec.domain));
   };
 
   const currentMaturity = calculateMaturityLevel();
@@ -180,7 +182,7 @@ const SecurityAssessment: React.FC = () => {
                           const progress = getDomainProgress(domain.id);
                           const isComplete = progress === 100;
                           const isActive = assessmentState.currentDomain === domain.id;
-                          
+
                           return (
                             <Button
                               key={domain.id}
@@ -188,8 +190,8 @@ const SecurityAssessment: React.FC = () => {
                               className={`w-full justify-start text-left h-auto p-3 ${
                                 isActive ? "bg-primary text-primary-foreground" : ""
                               }`}
-                              onClick={() => setCurrentDomain(domain.id)}
-                            >
+                              onClick={() => setCurrentDomain(domain.id)}>
+
                               <div className="flex items-start gap-3 w-full">
                                 <span className="text-lg">{domain.icon}</span>
                                 <div className="flex-1 min-w-0">
@@ -198,9 +200,9 @@ const SecurityAssessment: React.FC = () => {
                                   </div>
                                   <div className="flex items-center gap-2 mt-1">
                                     <Progress value={progress} className="h-1 flex-1" />
-                                    {isComplete && (
+                                    {isComplete &&
                                       <CheckCircle className="w-3 h-3 text-green-500" />
-                                    )}
+                                    }
                                   </div>
                                 </div>
                               </div>
@@ -216,10 +218,9 @@ const SecurityAssessment: React.FC = () => {
               {/* Domain Assessment */}
               <div className="lg:col-span-3">
                 <DomainAssessment
-                  domain={securityDomains.find(d => d.id === assessmentState.currentDomain)!}
+                  domain={securityDomains.find((d) => d.id === assessmentState.currentDomain)!}
                   answers={assessmentState.answers}
-                  onAnswerUpdate={updateAnswer}
-                />
+                  onAnswerUpdate={updateAnswer} />
               </div>
             </div>
           </TabsContent>
@@ -228,15 +229,13 @@ const SecurityAssessment: React.FC = () => {
             <ResultsDashboard
               domains={securityDomains}
               answers={assessmentState.answers}
-              maturityLevel={currentMaturity}
-            />
+              maturityLevel={currentMaturity} />
           </TabsContent>
 
           <TabsContent value="recommendations">
             <RecommendationsView
               recommendations={getRecommendations()}
-              answers={assessmentState.answers}
-            />
+              answers={assessmentState.answers} />
           </TabsContent>
         </Tabs>
       </div>

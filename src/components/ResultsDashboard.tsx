@@ -21,23 +21,23 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
     const totalWeight = domain.questions.reduce((sum, q) => sum + (q.weight || 1), 0);
     let achievedScore = 0;
     let answeredCount = 0;
-    
-    domain.questions.forEach(question => {
+
+    domain.questions.forEach((question) => {
       const answer = answers[question.id];
       if (answer && answer.value !== 'na') {
         answeredCount++;
         const weight = question.weight || 1;
         switch (answer.value) {
-          case 'yes': achievedScore += weight; break;
-          case 'partial': achievedScore += weight * 0.5; break;
-          case 'no': achievedScore += 0; break;
+          case 'yes':achievedScore += weight;break;
+          case 'partial':achievedScore += weight * 0.5;break;
+          case 'no':achievedScore += 0;break;
         }
       }
     });
-    
-    const score = totalWeight > 0 ? (achievedScore / totalWeight) * 100 : 0;
-    const completion = (answeredCount / domain.questions.length) * 100;
-    
+
+    const score = totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
+    const completion = answeredCount / domain.questions.length * 100;
+
     return { score, completion, answeredCount, totalQuestions: domain.questions.length };
   };
 
@@ -51,11 +51,11 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
   }, { totalQuestions: 0, answeredQuestions: 0, scores: [] as number[] });
 
   const averageScore = overallStats.scores.reduce((sum, score) => sum + score, 0) / overallStats.scores.length;
-  const completionRate = (overallStats.answeredQuestions / overallStats.totalQuestions) * 100;
+  const completionRate = overallStats.answeredQuestions / overallStats.totalQuestions * 100;
 
   // Identify areas needing attention
-  const criticalAreas = domains.filter(domain => getDomainScore(domain).score < 60);
-  const strongAreas = domains.filter(domain => getDomainScore(domain).score >= 80);
+  const criticalAreas = domains.filter((domain) => getDomainScore(domain).score < 60);
+  const strongAreas = domains.filter((domain) => getDomainScore(domain).score >= 80);
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-green-600';
@@ -131,9 +131,9 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {domains.map(domain => {
+            {domains.map((domain) => {
               const domainScore = getDomainScore(domain);
-              
+
               return (
                 <div key={domain.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-4">
@@ -155,8 +155,8 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
                     </div>
                     {getScoreIcon(domainScore.score)}
                   </div>
-                </div>
-              );
+                </div>);
+
             })}
           </div>
         </CardContent>
@@ -176,24 +176,24 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {criticalAreas.length > 0 ? (
-              <div className="space-y-2">
-                {criticalAreas.map(domain => (
-                  <div key={domain.id} className="flex items-center gap-2">
+            {criticalAreas.length > 0 ?
+            <div className="space-y-2">
+                {criticalAreas.map((domain) =>
+              <div key={domain.id} className="flex items-center gap-2">
                     <span>{domain.icon}</span>
                     <span className="font-medium">{domain.name}</span>
                     <Badge variant="destructive" className="ml-auto">
                       {Math.round(getDomainScore(domain).score)}%
                     </Badge>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-4 text-slate-600">
+              )}
+              </div> :
+
+            <div className="text-center py-4 text-slate-600">
                 <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-500" />
                 No critical areas identified
               </div>
-            )}
+            }
           </CardContent>
         </Card>
 
@@ -209,29 +209,29 @@ const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {strongAreas.length > 0 ? (
-              <div className="space-y-2">
-                {strongAreas.map(domain => (
-                  <div key={domain.id} className="flex items-center gap-2">
+            {strongAreas.length > 0 ?
+            <div className="space-y-2">
+                {strongAreas.map((domain) =>
+              <div key={domain.id} className="flex items-center gap-2">
                     <span>{domain.icon}</span>
                     <span className="font-medium">{domain.name}</span>
                     <Badge variant="default" className="ml-auto bg-green-600">
                       {Math.round(getDomainScore(domain).score)}%
                     </Badge>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-4 text-slate-600">
+              )}
+              </div> :
+
+            <div className="text-center py-4 text-slate-600">
                 <Clock className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
                 No domains at mature level yet
               </div>
-            )}
+            }
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ResultsDashboard;

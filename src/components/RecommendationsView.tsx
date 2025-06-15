@@ -7,6 +7,8 @@ import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, CheckCircle, Clock, Zap, Target, Wrench } from 'lucide-react';
 import { Recommendation, Answer } from '@/types/assessment';
 import { securityDomains } from '@/data/securityDomains';
+import NISTMaturityChart from '@/components/NISTMaturityChart';
+import PrintReport from '@/components/PrintReport';
 
 interface RecommendationsViewProps {
   recommendations: Recommendation[];
@@ -20,9 +22,9 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
   const [selectedPriority, setSelectedPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');
 
   // Group recommendations by priority
-  const highPriority = recommendations.filter(r => r.priority === 'high');
-  const mediumPriority = recommendations.filter(r => r.priority === 'medium');
-  const lowPriority = recommendations.filter(r => r.priority === 'low');
+  const highPriority = recommendations.filter((r) => r.priority === 'high');
+  const mediumPriority = recommendations.filter((r) => r.priority === 'medium');
+  const lowPriority = recommendations.filter((r) => r.priority === 'low');
 
   // Group by domain
   const recommendationsByDomain = recommendations.reduce((acc, rec) => {
@@ -31,9 +33,9 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
     return acc;
   }, {} as Record<string, Recommendation[]>);
 
-  const filteredRecommendations = selectedPriority === 'all' 
-    ? recommendations 
-    : recommendations.filter(r => r.priority === selectedPriority);
+  const filteredRecommendations = selectedPriority === 'all' ?
+    recommendations :
+    recommendations.filter((r) => r.priority === selectedPriority);
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
@@ -54,17 +56,71 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
   };
 
   const getDomainIcon = (domainId: string) => {
-    const domain = securityDomains.find(d => d.id === domainId);
+    const domain = securityDomains.find((d) => d.id === domainId);
     return domain?.icon || '🔧';
   };
 
   const getDomainName = (domainId: string) => {
-    const domain = securityDomains.find(d => d.id === domainId);
+    const domain = securityDomains.find((d) => d.id === domainId);
     return domain?.name || domainId;
+  };
+
+  // Calculate current maturity level for print report
+  const calculateMaturityLevel = () => {
+    const scores = securityDomains.map((domain) => {
+      const totalWeight = domain.questions.reduce((sum, q) => sum + (q.weight || 1), 0);
+      let achievedScore = 0;
+
+      domain.questions.forEach((question) => {
+        const answer = answers[question.id];
+        if (answer) {
+          const weight = question.weight || 1;
+          switch (answer.value) {
+            case 'yes': achievedScore += weight; break;
+            case 'partial': achievedScore += weight * 0.5; break;
+            case 'no': achievedScore += 0; break;
+            case 'na': break;
+          }
+        }
+      });
+
+      return totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
+    });
+
+    const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+
+    if (averageScore >= 90) return { level: 5, name: 'Optimized', description: 'Continuously improving security', color: 'bg-green-500' };
+    if (averageScore >= 75) return { level: 4, name: 'Managed', description: 'Measured and controlled security', color: 'bg-blue-500' };
+    if (averageScore >= 60) return { level: 3, name: 'Defined', description: 'Documented security processes', color: 'bg-yellow-500' };
+    if (averageScore >= 40) return { level: 2, name: 'Developing', description: 'Basic security controls in place', color: 'bg-orange-500' };
+    return { level: 1, name: 'Initial', description: 'Ad-hoc security practices', color: 'bg-red-500' };
   };
 
   return (
     <div className="space-y-6">
+      {/* Print Report Button */}
+      <div className="flex justify-end">
+        <PrintReport 
+          domains={securityDomains}
+          answers={answers}
+          maturityLevel={calculateMaturityLevel()}
+          recommendations={recommendations}
+        />
+      </div>
+
+      {/* NIST Maturity Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>NIST Cybersecurity Framework Maturity</CardTitle>
+          <CardDescription>
+            Assessment results mapped to NIST CSF functions showing current maturity levels
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <NISTMaturityChart domains={securityDomains} answers={answers} />
+        </CardContent>
+      </Card>
+
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
@@ -126,7 +182,7 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
         </TabsList>
 
         <TabsContent value={selectedPriority} className="space-y-4 mt-6">
-          {filteredRecommendations.length === 0 ? (
+          {filteredRecommendations.length === 0 ?
             <Card>
               <CardContent className="pt-6">
                 <div className="text-center py-8">
@@ -137,9 +193,9 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                   </p>
                 </div>
               </CardContent>
-            </Card>
-          ) : (
-            filteredRecommendations.map((recommendation) => (
+            </Card> :
+
+            filteredRecommendations.map((recommendation) =>
               <Card key={recommendation.id} className={getPriorityColor(recommendation.priority)}>
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -154,11 +210,10 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                           <Badge variant="outline" className="text-xs">
                             {getDomainName(recommendation.domain)}
                           </Badge>
-                          <Badge 
-                            variant={recommendation.priority === 'high' ? 'destructive' : 
-                                   recommendation.priority === 'medium' ? 'default' : 'secondary'}
-                            className="text-xs"
-                          >
+                          <Badge
+                            variant={recommendation.priority === 'high' ? 'destructive' :
+                              recommendation.priority === 'medium' ? 'default' : 'secondary'}
+                            className="text-xs">
                             {recommendation.priority.toUpperCase()}
                           </Badge>
                         </CardDescription>
@@ -185,11 +240,11 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                       Recommended Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {recommendation.technologies.map((tech, index) => (
+                      {recommendation.technologies.map((tech, index) =>
                         <Badge key={index} variant="secondary" className="text-xs">
                           {tech}
                         </Badge>
-                      ))}
+                      )}
                     </div>
                   </div>
 
@@ -205,13 +260,13 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                   </div>
                 </CardContent>
               </Card>
-            ))
-          )}
+            )
+          }
         </TabsContent>
       </Tabs>
 
       {/* Implementation Roadmap */}
-      {recommendations.length > 0 && (
+      {recommendations.length > 0 &&
         <Card>
           <CardHeader>
             <CardTitle>Implementation Roadmap</CardTitle>
@@ -224,42 +279,42 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
               <div>
                 <h4 className="font-medium text-sm mb-2 text-red-600">Phase 1: Critical Security Gaps (0-3 months)</h4>
                 <div className="pl-4 space-y-1">
-                  {highPriority.slice(0, 3).map(rec => (
+                  {highPriority.slice(0, 3).map((rec) =>
                     <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
               <div>
                 <h4 className="font-medium text-sm mb-2 text-yellow-600">Phase 2: Security Enhancements (3-9 months)</h4>
                 <div className="pl-4 space-y-1">
-                  {[...highPriority.slice(3), ...mediumPriority.slice(0, 3)].map(rec => (
+                  {[...highPriority.slice(3), ...mediumPriority.slice(0, 3)].map((rec) =>
                     <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
               <div>
                 <h4 className="font-medium text-sm mb-2 text-blue-600">Phase 3: Security Optimization (9+ months)</h4>
                 <div className="pl-4 space-y-1">
-                  {[...mediumPriority.slice(3), ...lowPriority].map(rec => (
+                  {[...mediumPriority.slice(3), ...lowPriority].map((rec) =>
                     <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      )}
+      }
     </div>
   );
 };

@@ -18,8 +18,8 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
   answers,
   onAnswerUpdate
 }) => {
-  const answeredQuestions = domain.questions.filter(q => answers[q.id]).length;
-  const progress = (answeredQuestions / domain.questions.length) * 100;
+  const answeredQuestions = domain.questions.filter((q) => answers[q.id]).length;
+  const progress = answeredQuestions / domain.questions.length * 100;
 
   const handleAnswerChange = (questionId: string, value: Answer['value']) => {
     const currentAnswer = answers[questionId];
@@ -42,18 +42,18 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
 
   const getAnswerButton = (questionId: string, value: Answer['value'], icon: React.ReactNode, label: string, colorClass: string) => {
     const isSelected = answers[questionId]?.value === value;
-    
+
     return (
       <Button
         variant={isSelected ? "default" : "outline"}
         size="sm"
         className={`flex items-center gap-1 ${isSelected ? colorClass : ''}`}
-        onClick={() => handleAnswerChange(questionId, value)}
-      >
+        onClick={() => handleAnswerChange(questionId, value)}>
+
         {icon}
         {label}
-      </Button>
-    );
+      </Button>);
+
   };
 
   return (
@@ -80,7 +80,7 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
         {domain.questions.map((question, index) => {
           const answer = answers[question.id];
           const isAnswered = !!answer;
-          
+
           return (
             <Card key={question.id} className={`${isAnswered ? 'border-green-200 bg-green-50/50' : ''}`}>
               <CardContent className="pt-6">
@@ -94,11 +94,11 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
                       <p className="font-medium text-slate-900 leading-relaxed">
                         {question.text}
                       </p>
-                      {question.weight && question.weight > 1 && (
-                        <Badge variant="secondary" className="text-xs mt-2">
+                      {question.weight && question.weight > 1 &&
+                      <Badge variant="secondary" className="text-xs mt-2">
                           High Priority (Weight: {question.weight})
                         </Badge>
-                      )}
+                      }
                     </div>
                   </div>
 
@@ -135,25 +135,25 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
                   </div>
 
                   {/* Notes */}
-                  {isAnswered && (
-                    <div className="ml-8">
+                  {isAnswered &&
+                  <div className="ml-8">
                       <Textarea
-                        placeholder="Add notes or comments (optional)..."
-                        value={answer.notes || ''}
-                        onChange={(e) => handleNotesChange(question.id, e.target.value)}
-                        className="text-sm"
-                        rows={2}
-                      />
+                      placeholder="Add notes or comments (optional)..."
+                      value={answer.notes || ''}
+                      onChange={(e) => handleNotesChange(question.id, e.target.value)}
+                      className="text-sm"
+                      rows={2} />
+
                     </div>
-                  )}
+                  }
                 </div>
               </CardContent>
-            </Card>
-          );
+            </Card>);
+
         })}
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 };
 
 export default DomainAssessment;
