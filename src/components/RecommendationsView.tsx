@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, CheckCircle, Clock, Zap, Target, Wrench } from 'lucide-react';
 import { Recommendation, Answer } from '@/types/assessment';
 import { securityDomains } from '@/data/securityDomains';
 import NISTMaturityChart from '@/components/NISTMaturityChart';
-import PrintReport from '@/components/PrintReport';
 
 interface RecommendationsViewProps {
   recommendations: Recommendation[];
@@ -34,24 +31,24 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
   }, {} as Record<string, Recommendation[]>);
 
   const filteredRecommendations = selectedPriority === 'all' ?
-    recommendations :
-    recommendations.filter((r) => r.priority === selectedPriority);
+  recommendations :
+  recommendations.filter((r) => r.priority === selectedPriority);
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
-      case 'high': return <AlertTriangle className="w-4 h-4 text-red-500" />;
-      case 'medium': return <Clock className="w-4 h-4 text-yellow-500" />;
-      case 'low': return <CheckCircle className="w-4 h-4 text-blue-500" />;
-      default: return null;
+      case 'high':return <AlertTriangle className="w-4 h-4 text-red-500" />;
+      case 'medium':return <Clock className="w-4 h-4 text-yellow-500" />;
+      case 'low':return <CheckCircle className="w-4 h-4 text-blue-500" />;
+      default:return null;
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'border-red-200 bg-red-50';
-      case 'medium': return 'border-yellow-200 bg-yellow-50';
-      case 'low': return 'border-blue-200 bg-blue-50';
-      default: return '';
+      case 'high':return 'border-red-200 bg-red-50';
+      case 'medium':return 'border-yellow-200 bg-yellow-50';
+      case 'low':return 'border-blue-200 bg-blue-50';
+      default:return '';
     }
   };
 
@@ -65,49 +62,8 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
     return domain?.name || domainId;
   };
 
-  // Calculate current maturity level for print report
-  const calculateMaturityLevel = () => {
-    const scores = securityDomains.map((domain) => {
-      const totalWeight = domain.questions.reduce((sum, q) => sum + (q.weight || 1), 0);
-      let achievedScore = 0;
-
-      domain.questions.forEach((question) => {
-        const answer = answers[question.id];
-        if (answer) {
-          const weight = question.weight || 1;
-          switch (answer.value) {
-            case 'yes': achievedScore += weight; break;
-            case 'partial': achievedScore += weight * 0.5; break;
-            case 'no': achievedScore += 0; break;
-            case 'na': break;
-          }
-        }
-      });
-
-      return totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
-    });
-
-    const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
-
-    if (averageScore >= 90) return { level: 5, name: 'Optimized', description: 'Continuously improving security', color: 'bg-green-500' };
-    if (averageScore >= 75) return { level: 4, name: 'Managed', description: 'Measured and controlled security', color: 'bg-blue-500' };
-    if (averageScore >= 60) return { level: 3, name: 'Defined', description: 'Documented security processes', color: 'bg-yellow-500' };
-    if (averageScore >= 40) return { level: 2, name: 'Developing', description: 'Basic security controls in place', color: 'bg-orange-500' };
-    return { level: 1, name: 'Initial', description: 'Ad-hoc security practices', color: 'bg-red-500' };
-  };
-
   return (
     <div className="space-y-6">
-      {/* Print Report Button */}
-      <div className="flex justify-end">
-        <PrintReport 
-          domains={securityDomains}
-          answers={answers}
-          maturityLevel={calculateMaturityLevel()}
-          recommendations={recommendations}
-        />
-      </div>
-
       {/* NIST Maturity Chart */}
       <Card>
         <CardHeader>
@@ -183,7 +139,7 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
 
         <TabsContent value={selectedPriority} className="space-y-4 mt-6">
           {filteredRecommendations.length === 0 ?
-            <Card>
+          <Card>
               <CardContent className="pt-6">
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 mx-auto mb-4 text-green-500" />
@@ -195,8 +151,8 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
               </CardContent>
             </Card> :
 
-            filteredRecommendations.map((recommendation) =>
-              <Card key={recommendation.id} className={getPriorityColor(recommendation.priority)}>
+          filteredRecommendations.map((recommendation) =>
+          <Card key={recommendation.id} className={getPriorityColor(recommendation.priority)}>
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
@@ -211,9 +167,9 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                             {getDomainName(recommendation.domain)}
                           </Badge>
                           <Badge
-                            variant={recommendation.priority === 'high' ? 'destructive' :
-                              recommendation.priority === 'medium' ? 'default' : 'secondary'}
-                            className="text-xs">
+                        variant={recommendation.priority === 'high' ? 'destructive' :
+                        recommendation.priority === 'medium' ? 'default' : 'secondary'}
+                        className="text-xs">
                             {recommendation.priority.toUpperCase()}
                           </Badge>
                         </CardDescription>
@@ -241,10 +197,10 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {recommendation.technologies.map((tech, index) =>
-                        <Badge key={index} variant="secondary" className="text-xs">
+                  <Badge key={index} variant="secondary" className="text-xs">
                           {tech}
                         </Badge>
-                      )}
+                  )}
                     </div>
                   </div>
 
@@ -260,14 +216,14 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                   </div>
                 </CardContent>
               </Card>
-            )
+          )
           }
         </TabsContent>
       </Tabs>
 
       {/* Implementation Roadmap */}
       {recommendations.length > 0 &&
-        <Card>
+      <Card>
           <CardHeader>
             <CardTitle>Implementation Roadmap</CardTitle>
             <CardDescription>
@@ -280,11 +236,11 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                 <h4 className="font-medium text-sm mb-2 text-red-600">Phase 1: Critical Security Gaps (0-3 months)</h4>
                 <div className="pl-4 space-y-1">
                   {highPriority.slice(0, 3).map((rec) =>
-                    <div key={rec.id} className="text-sm flex items-center gap-2">
+                <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  )}
+                )}
                 </div>
               </div>
 
@@ -292,11 +248,11 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                 <h4 className="font-medium text-sm mb-2 text-yellow-600">Phase 2: Security Enhancements (3-9 months)</h4>
                 <div className="pl-4 space-y-1">
                   {[...highPriority.slice(3), ...mediumPriority.slice(0, 3)].map((rec) =>
-                    <div key={rec.id} className="text-sm flex items-center gap-2">
+                <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  )}
+                )}
                 </div>
               </div>
 
@@ -304,19 +260,19 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
                 <h4 className="font-medium text-sm mb-2 text-blue-600">Phase 3: Security Optimization (9+ months)</h4>
                 <div className="pl-4 space-y-1">
                   {[...mediumPriority.slice(3), ...lowPriority].map((rec) =>
-                    <div key={rec.id} className="text-sm flex items-center gap-2">
+                <div key={rec.id} className="text-sm flex items-center gap-2">
                       <span>{getDomainIcon(rec.domain)}</span>
                       <span>{rec.title}</span>
                     </div>
-                  )}
+                )}
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
       }
-    </div>
-  );
+    </div>);
+
 };
 
 export default RecommendationsView;

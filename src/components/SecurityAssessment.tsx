@@ -15,12 +15,12 @@ import ResultsDashboard from '@/components/ResultsDashboard';
 import RecommendationsView from '@/components/RecommendationsView';
 
 const maturityLevels: MaturityLevel[] = [
-  { level: 1, name: 'Initial', description: 'Ad-hoc security practices', color: 'bg-red-500' },
-  { level: 2, name: 'Developing', description: 'Basic security controls in place', color: 'bg-orange-500' },
-  { level: 3, name: 'Defined', description: 'Documented security processes', color: 'bg-yellow-500' },
-  { level: 4, name: 'Managed', description: 'Measured and controlled security', color: 'bg-blue-500' },
-  { level: 5, name: 'Optimized', description: 'Continuously improving security', color: 'bg-green-500' }
-];
+{ level: 1, name: 'Initial', description: 'Ad-hoc security practices', color: 'bg-red-500' },
+{ level: 2, name: 'Developing', description: 'Basic security controls in place', color: 'bg-orange-500' },
+{ level: 3, name: 'Defined', description: 'Documented security processes', color: 'bg-yellow-500' },
+{ level: 4, name: 'Managed', description: 'Measured and controlled security', color: 'bg-blue-500' },
+{ level: 5, name: 'Optimized', description: 'Continuously improving security', color: 'bg-green-500' }];
+
 
 const SecurityAssessment: React.FC = () => {
   const [assessmentState, setAssessmentState] = useState<AssessmentState>({
@@ -56,10 +56,10 @@ const SecurityAssessment: React.FC = () => {
         if (answer) {
           const weight = question.weight || 1;
           switch (answer.value) {
-            case 'yes': achievedScore += weight; break;
-            case 'partial': achievedScore += weight * 0.5; break;
-            case 'no': achievedScore += 0; break;
-            case 'na': break; // Don't count N/A in scoring
+            case 'yes':achievedScore += weight;break;
+            case 'partial':achievedScore += weight * 0.5;break;
+            case 'no':achievedScore += 0;break;
+            case 'na':break; // Don't count N/A in scoring
           }
         }
       });
@@ -188,8 +188,8 @@ const SecurityAssessment: React.FC = () => {
                               key={domain.id}
                               variant={isActive ? "default" : "ghost"}
                               className={`w-full justify-start text-left h-auto p-3 ${
-                                isActive ? "bg-primary text-primary-foreground" : ""
-                              }`}
+                              isActive ? "bg-primary text-primary-foreground" : ""}`
+                              }
                               onClick={() => setCurrentDomain(domain.id)}>
 
                               <div className="flex items-start gap-3 w-full">
@@ -201,13 +201,13 @@ const SecurityAssessment: React.FC = () => {
                                   <div className="flex items-center gap-2 mt-1">
                                     <Progress value={progress} className="h-1 flex-1" />
                                     {isComplete &&
-                                      <CheckCircle className="w-3 h-3 text-green-500" />
+                                    <CheckCircle className="w-3 h-3 text-green-500" />
                                     }
                                   </div>
                                 </div>
                               </div>
-                            </Button>
-                          );
+                            </Button>);
+
                         })}
                       </div>
                     </ScrollArea>
@@ -239,8 +239,8 @@ const SecurityAssessment: React.FC = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default SecurityAssessment;

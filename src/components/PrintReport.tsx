@@ -10,11 +10,11 @@ interface PrintReportProps {
   recommendations: any[];
 }
 
-const PrintReport: React.FC<PrintReportProps> = ({ 
-  domains, 
-  answers, 
-  maturityLevel, 
-  recommendations 
+const PrintReport: React.FC<PrintReportProps> = ({
+  domains,
+  answers,
+  maturityLevel,
+  recommendations
 }) => {
   const handlePrint = () => {
     window.print();
@@ -29,15 +29,15 @@ const PrintReport: React.FC<PrintReportProps> = ({
       if (answer) {
         const weight = question.weight || 1;
         switch (answer.value) {
-          case 'yes': achievedScore += weight; break;
-          case 'partial': achievedScore += weight * 0.5; break;
-          case 'no': achievedScore += 0; break;
-          case 'na': break;
+          case 'yes':achievedScore += weight;break;
+          case 'partial':achievedScore += weight * 0.5;break;
+          case 'no':achievedScore += 0;break;
+          case 'na':break;
         }
       }
     });
 
-    return totalWeight > 0 ? (achievedScore / totalWeight) * 100 : 0;
+    return totalWeight > 0 ? achievedScore / totalWeight * 100 : 0;
   };
 
   const totalQuestions = domains.reduce((sum, domain) => sum + domain.questions.length, 0);
@@ -46,9 +46,9 @@ const PrintReport: React.FC<PrintReportProps> = ({
 
   const generateReportContent = () => {
     const reportDate = new Date().toLocaleDateString();
-    const highPriorityRecs = recommendations.filter(r => r.priority === 'high');
-    const mediumPriorityRecs = recommendations.filter(r => r.priority === 'medium');
-    const lowPriorityRecs = recommendations.filter(r => r.priority === 'low');
+    const highPriorityRecs = recommendations.filter((r) => r.priority === 'high');
+    const mediumPriorityRecs = recommendations.filter((r) => r.priority === 'medium');
+    const lowPriorityRecs = recommendations.filter((r) => r.priority === 'low');
 
     return `
       <!DOCTYPE html>
@@ -100,12 +100,12 @@ const PrintReport: React.FC<PrintReportProps> = ({
 
             <div class="section page-break">
               <h2>Domain Assessment Results</h2>
-              ${domains.map(domain => {
-                const score = Math.round(calculateDomainScore(domain));
-                const domainAnswers = domain.questions.filter(q => answers[q.id]);
-                const completion = Math.round((domainAnswers.length / domain.questions.length) * 100);
-                
-                return `
+              ${domains.map((domain) => {
+      const score = Math.round(calculateDomainScore(domain));
+      const domainAnswers = domain.questions.filter((q) => answers[q.id]);
+      const completion = Math.round(domainAnswers.length / domain.questions.length * 100);
+
+      return `
                   <div class="domain-summary">
                     <div>
                       <strong>${domain.icon} ${domain.name}</strong><br>
@@ -117,12 +117,12 @@ const PrintReport: React.FC<PrintReportProps> = ({
                     </div>
                   </div>
                 `;
-              }).join('')}
+    }).join('')}
             </div>
 
             <div class="section page-break">
               <h2>High Priority Recommendations</h2>
-              ${highPriorityRecs.length > 0 ? highPriorityRecs.map(rec => `
+              ${highPriorityRecs.length > 0 ? highPriorityRecs.map((rec) => `
                 <div class="recommendation high-priority">
                   <h3>${rec.title}</h3>
                   <p>${rec.description}</p>
@@ -134,7 +134,7 @@ const PrintReport: React.FC<PrintReportProps> = ({
 
             <div class="section page-break">
               <h2>Medium Priority Recommendations</h2>
-              ${mediumPriorityRecs.map(rec => `
+              ${mediumPriorityRecs.map((rec) => `
                 <div class="recommendation medium-priority">
                   <h3>${rec.title}</h3>
                   <p>${rec.description}</p>
@@ -146,7 +146,7 @@ const PrintReport: React.FC<PrintReportProps> = ({
 
             <div class="section page-break">
               <h2>Low Priority Recommendations</h2>
-              ${lowPriorityRecs.map(rec => `
+              ${lowPriorityRecs.map((rec) => `
                 <div class="recommendation low-priority">
                   <h3>${rec.title}</h3>
                   <p>${rec.description}</p>
@@ -194,8 +194,8 @@ const PrintReport: React.FC<PrintReportProps> = ({
         <Download className="w-4 h-4 mr-2" />
         Download HTML Report
       </Button>
-    </div>
-  );
+    </div>);
+
 };
 
 export default PrintReport;
