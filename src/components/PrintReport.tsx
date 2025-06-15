@@ -185,13 +185,13 @@ const PrintReport: React.FC<PrintReportProps> = ({
   };
 
   return (
-    <div className="flex gap-2 no-print">
-      <Button onClick={handlePrint} variant="outline" size="sm">
-        <Printer className="w-4 h-4 mr-2" />
+    <div className="flex gap-2 no-print" data-id="6lekkbmr8" data-path="src/components/PrintReport.tsx">
+      <Button onClick={handlePrint} variant="outline" size="sm" data-id="feoizwg6k" data-path="src/components/PrintReport.tsx">
+        <Printer className="w-4 h-4 mr-2" data-id="jyteh54eh" data-path="src/components/PrintReport.tsx" />
         Print Report
       </Button>
-      <Button onClick={downloadReport} variant="outline" size="sm">
-        <Download className="w-4 h-4 mr-2" />
+      <Button onClick={downloadReport} variant="outline" size="sm" data-id="5kv9dcu5w" data-path="src/components/PrintReport.tsx">
+        <Download className="w-4 h-4 mr-2" data-id="6a44mgb7d" data-path="src/components/PrintReport.tsx" />
         Download HTML Report
       </Button>
     </div>);
