@@ -13,17 +13,18 @@ export const getRecommendationsFromDB = async (answers: Record<string, any> = {}
       OrderByField: 'ID',
       IsAsc: false,
       Filters: [
-        {
-          name: 'is_active',
-          op: 'Equal',
-          value: true
-        }
-      ]
+      {
+        name: 'is_active',
+        op: 'Equal',
+        value: true
+      }]
+
     });
 
     if (error) {
       console.error('Error fetching recommendations from database:', error);
-      throw new Error(`Database error: ${error}`);
+      // Fall back to static recommendations if database fails
+      return [];
     }
 
     if (!data?.List || data.List.length === 0) {
@@ -49,14 +50,14 @@ export const getRecommendationsFromDB = async (answers: Record<string, any> = {}
 
     // Check for Defender EPP/EDR usage
     const hasDefender = Object.values(answers).some((answer) =>
-      answer.notes?.toLowerCase().includes('defender') ||
-      answer.notes?.toLowerCase().includes('microsoft defender')
+    answer.notes?.toLowerCase().includes('defender') ||
+    answer.notes?.toLowerCase().includes('microsoft defender')
     );
 
     // Check for Azure cloud usage
     const hasAzure = Object.values(answers).some((answer) =>
-      answer.notes?.toLowerCase().includes('azure') ||
-      answer.notes?.toLowerCase().includes('microsoft azure')
+    answer.notes?.toLowerCase().includes('azure') ||
+    answer.notes?.toLowerCase().includes('microsoft azure')
     );
 
     // Prioritize SIEM/Sentinel if Defender or Azure is detected
@@ -81,63 +82,21 @@ export const getRecommendationsFromDB = async (answers: Record<string, any> = {}
     return prioritizedRecommendations;
   } catch (error) {
     console.error('Error in getRecommendationsFromDB:', error);
-    throw error; // Re-throw to allow caller to handle
-  }
-};
-
-// Check if database has any recommendations
-export const checkDatabaseStatus = async (): Promise<{ hasData: boolean; count: number; error?: string }> => {
-  try {
-    const { data, error } = await window.ezsite.apis.tablePage(TABLE_ID, {
-      PageNo: 1,
-      PageSize: 1,
-      OrderByField: 'ID',
-      IsAsc: false,
-      Filters: []
-    });
-
-    if (error) {
-      return { hasData: false, count: 0, error };
-    }
-
-    const count = data?.VirtualCount || 0;
-    return { hasData: count > 0, count };
-  } catch (error) {
-    return { hasData: false, count: 0, error: error instanceof Error ? error.message : 'Unknown error' };
+    return [];
   }
 };
 
 // Fallback function that combines database and static recommendations
 export const recommendationDatabase = async (answers: Record<string, any> = {}): Promise<Recommendation[]> => {
-  try {
-    // First, try to get recommendations from database
-    const dbRecommendations = await getRecommendationsFromDB(answers);
-    
-    if (dbRecommendations.length > 0) {
-      return dbRecommendations;
-    }
+  const dbRecommendations = await getRecommendationsFromDB(answers);
 
-    // If database is empty, check if it's accessible
-    const dbStatus = await checkDatabaseStatus();
-    if (dbStatus.error) {
-      console.log('Database error, falling back to static recommendations:', dbStatus.error);
-    } else {
-      console.log('Database is accessible but empty, using static recommendations as fallback');
-    }
-
-    // Fallback to original static recommendations
-    const { recommendationDatabase: staticRecommendations } = await import('./recommendations');
-    return staticRecommendations(answers);
-  } catch (error) {
-    console.error('Error in recommendationDatabase:', error);
-    
-    // Final fallback to static recommendations
-    try {
-      const { recommendationDatabase: staticRecommendations } = await import('./recommendations');
-      return staticRecommendations(answers);
-    } catch (fallbackError) {
-      console.error('Even static recommendations failed:', fallbackError);
-      return [];
-    }
+  // If we have database recommendations, use them
+  if (dbRecommendations.length > 0) {
+    return dbRecommendations;
   }
+
+  // Fallback to original static recommendations if database is empty
+  console.log('Using fallback static recommendations');
+  const { recommendationDatabase: staticRecommendations } = await import('./recommendations');
+  return staticRecommendations(answers);
 };

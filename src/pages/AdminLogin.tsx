@@ -60,29 +60,29 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
-              <Shield className="h-8 w-8 text-white" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4" data-id="00y6djmam" data-path="src/pages/AdminLogin.tsx">
+      <Card className="w-full max-w-md" data-id="vzatq4yq7" data-path="src/pages/AdminLogin.tsx">
+        <CardHeader className="text-center" data-id="rut1uzc9s" data-path="src/pages/AdminLogin.tsx">
+          <div className="flex justify-center mb-4" data-id="8z7u2s3v6" data-path="src/pages/AdminLogin.tsx">
+            <div className="bg-blue-600 p-3 rounded-full" data-id="208kl3arg" data-path="src/pages/AdminLogin.tsx">
+              <Shield className="h-8 w-8 text-white" data-id="hqwvs30m4" data-path="src/pages/AdminLogin.tsx" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Admin Login</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold" data-id="gngjuocjz" data-path="src/pages/AdminLogin.tsx">Admin Login</CardTitle>
+          <CardDescription data-id="xujb5w6py" data-path="src/pages/AdminLogin.tsx">
             Access the security recommendations management system
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+        <CardContent data-id="fbyge8qcj" data-path="src/pages/AdminLogin.tsx">
+          <form onSubmit={handleLogin} className="space-y-4" data-id="zzsdd7n3l" data-path="src/pages/AdminLogin.tsx">
             {error &&
-            <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
+            <Alert variant="destructive" data-id="54cw82ndf" data-path="src/pages/AdminLogin.tsx">
+                <AlertDescription data-id="83liev8eb" data-path="src/pages/AdminLogin.tsx">{error}</AlertDescription>
               </Alert>
             }
             
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-2" data-id="74sxm41bu" data-path="src/pages/AdminLogin.tsx">
+              <Label htmlFor="email" data-id="a9yjtysez" data-path="src/pages/AdminLogin.tsx">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -90,12 +90,12 @@ const AdminLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={isLoading} />
+                disabled={isLoading} data-id="wly3w161a" data-path="src/pages/AdminLogin.tsx" />
 
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-2" data-id="n1vpfdyjp" data-path="src/pages/AdminLogin.tsx">
+              <Label htmlFor="password" data-id="xqota320o" data-path="src/pages/AdminLogin.tsx">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -103,23 +103,23 @@ const AdminLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                disabled={isLoading} />
+                disabled={isLoading} data-id="442s41abn" data-path="src/pages/AdminLogin.tsx" />
 
             </div>
             
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading}>
+              disabled={isLoading} data-id="fss5wnvhy" data-path="src/pages/AdminLogin.tsx">
 
               {isLoading ?
-              <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <div className="flex items-center gap-2" data-id="7orz1lrf8" data-path="src/pages/AdminLogin.tsx">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" data-id="87hkf51j2" data-path="src/pages/AdminLogin.tsx"></div>
                   Signing in...
                 </div> :
 
-              <div className="flex items-center gap-2">
-                  <Lock className="h-4 w-4" />
+              <div className="flex items-center gap-2" data-id="prwwaysrz" data-path="src/pages/AdminLogin.tsx">
+                  <Lock className="h-4 w-4" data-id="w3hyphebh" data-path="src/pages/AdminLogin.tsx" />
                   Sign In
                 </div>
               }

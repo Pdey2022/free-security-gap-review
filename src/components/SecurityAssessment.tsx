@@ -93,39 +93,56 @@ const SecurityAssessment: React.FC = () => {
     }));
   };
 
+  const getRecommendations = () => {
+    const gaps: string[] = [];
+
+    securityDomains.forEach((domain) => {
+      domain.questions.forEach((question) => {
+        const answer = assessmentState.answers[question.id];
+        if (!answer || answer.value === 'no' || answer.value === 'partial' && (question.weight || 1) >= 2) {
+          gaps.push(domain.id);
+        }
+      });
+    });
+
+    // Use the updated recommendation function with smart prioritization
+    const allRecommendations = recommendationDatabase(assessmentState.answers);
+    return allRecommendations.filter((rec) => gaps.includes(rec.domain));
+  };
+
   const currentMaturity = calculateMaturityLevel();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4" data-id="56a4syhla" data-path="src/components/SecurityAssessment.tsx">
+      <div className="max-w-7xl mx-auto" data-id="6kx05j47e" data-path="src/components/SecurityAssessment.tsx">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">
+        <div className="mb-8" data-id="ru1fvf4qt" data-path="src/components/SecurityAssessment.tsx">
+          <h1 className="text-4xl font-bold text-slate-900 mb-2" data-id="d1mh7g7ui" data-path="src/components/SecurityAssessment.tsx">
             Security Maturity Assessment
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-lg text-slate-600" data-id="bxsym96tr" data-path="src/components/SecurityAssessment.tsx">
             Comprehensive security review to identify maturity gaps and recommend mitigating technologies
           </p>
           
           {/* Overall Progress */}
-          <Card className="mt-4">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Overall Progress</span>
-                <span className="text-sm text-slate-600">
+          <Card className="mt-4" data-id="lgfq07g3m" data-path="src/components/SecurityAssessment.tsx">
+            <CardContent className="pt-6" data-id="4k1e5x5v2" data-path="src/components/SecurityAssessment.tsx">
+              <div className="flex items-center justify-between mb-2" data-id="r0qed6q6h" data-path="src/components/SecurityAssessment.tsx">
+                <span className="text-sm font-medium" data-id="nkhk44q14" data-path="src/components/SecurityAssessment.tsx">Overall Progress</span>
+                <span className="text-sm text-slate-600" data-id="mv8kwkqf2" data-path="src/components/SecurityAssessment.tsx">
                   {answeredQuestions} of {totalQuestions} questions
                 </span>
               </div>
-              <Progress value={overallProgress} className="h-2" />
+              <Progress value={overallProgress} className="h-2" data-id="6mhgfl8kl" data-path="src/components/SecurityAssessment.tsx" />
               
-              <div className="flex items-center gap-4 mt-4">
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${currentMaturity.color}`} />
-                  <span className="text-sm font-medium">
+              <div className="flex items-center gap-4 mt-4" data-id="r43w2cl80" data-path="src/components/SecurityAssessment.tsx">
+                <div className="flex items-center gap-2" data-id="0asectqq9" data-path="src/components/SecurityAssessment.tsx">
+                  <div className={`w-3 h-3 rounded-full ${currentMaturity.color}`} data-id="qwknhmw1i" data-path="src/components/SecurityAssessment.tsx" />
+                  <span className="text-sm font-medium" data-id="gr4vs0zdr" data-path="src/components/SecurityAssessment.tsx">
                     Maturity Level: {currentMaturity.name}
                   </span>
                 </div>
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs" data-id="lhons3c2j" data-path="src/components/SecurityAssessment.tsx">
                   {currentMaturity.description}
                 </Badge>
               </div>
@@ -134,33 +151,33 @@ const SecurityAssessment: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="assessment" className="flex items-center gap-2">
-              <FileText className="w-4 h-4" />
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-id="11vejgsmq" data-path="src/components/SecurityAssessment.tsx">
+          <TabsList className="grid w-full grid-cols-3" data-id="weqfcd7bc" data-path="src/components/SecurityAssessment.tsx">
+            <TabsTrigger value="assessment" className="flex items-center gap-2" data-id="kjx18y507" data-path="src/components/SecurityAssessment.tsx">
+              <FileText className="w-4 h-4" data-id="h6inilsvr" data-path="src/components/SecurityAssessment.tsx" />
               Assessment
             </TabsTrigger>
-            <TabsTrigger value="results" className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4" />
+            <TabsTrigger value="results" className="flex items-center gap-2" data-id="c5lvt97i3" data-path="src/components/SecurityAssessment.tsx">
+              <CheckCircle className="w-4 h-4" data-id="ph3c263cm" data-path="src/components/SecurityAssessment.tsx" />
               Results
             </TabsTrigger>
-            <TabsTrigger value="recommendations" className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4" />
+            <TabsTrigger value="recommendations" className="flex items-center gap-2" data-id="ulo5sfq26" data-path="src/components/SecurityAssessment.tsx">
+              <AlertCircle className="w-4 h-4" data-id="orpwtoiei" data-path="src/components/SecurityAssessment.tsx" />
               Recommendations
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="assessment" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <TabsContent value="assessment" className="space-y-6" data-id="q66dklupa" data-path="src/components/SecurityAssessment.tsx">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6" data-id="s32o9yfk7" data-path="src/components/SecurityAssessment.tsx">
               {/* Domain Navigation */}
-              <div className="lg:col-span-1">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Security Domains</CardTitle>
+              <div className="lg:col-span-1" data-id="1ge49ytjx" data-path="src/components/SecurityAssessment.tsx">
+                <Card data-id="n20c4u0yt" data-path="src/components/SecurityAssessment.tsx">
+                  <CardHeader data-id="zymhgfy36" data-path="src/components/SecurityAssessment.tsx">
+                    <CardTitle className="text-lg" data-id="q87e5h4gc" data-path="src/components/SecurityAssessment.tsx">Security Domains</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
-                    <ScrollArea className="h-[600px]">
-                      <div className="space-y-1 p-4">
+                  <CardContent className="p-0" data-id="klkgjfdj9" data-path="src/components/SecurityAssessment.tsx">
+                    <ScrollArea className="h-[600px]" data-id="fg1g17p2g" data-path="src/components/SecurityAssessment.tsx">
+                      <div className="space-y-1 p-4" data-id="gansg558y" data-path="src/components/SecurityAssessment.tsx">
                         {securityDomains.map((domain) => {
                           const progress = getDomainProgress(domain.id);
                           const isComplete = progress === 100;
@@ -173,18 +190,18 @@ const SecurityAssessment: React.FC = () => {
                               className={`w-full justify-start text-left h-auto p-3 ${
                               isActive ? "bg-primary text-primary-foreground" : ""}`
                               }
-                              onClick={() => setCurrentDomain(domain.id)}>
+                              onClick={() => setCurrentDomain(domain.id)} data-id="47gp02eu6" data-path="src/components/SecurityAssessment.tsx">
 
-                              <div className="flex items-start gap-3 w-full">
-                                <span className="text-lg">{domain.icon}</span>
-                                <div className="flex-1 min-w-0">
-                                  <div className="font-medium text-sm line-clamp-2">
+                              <div className="flex items-start gap-3 w-full" data-id="1akn5p7oa" data-path="src/components/SecurityAssessment.tsx">
+                                <span className="text-lg" data-id="h47sfcnia" data-path="src/components/SecurityAssessment.tsx">{domain.icon}</span>
+                                <div className="flex-1 min-w-0" data-id="nmu7gqhnn" data-path="src/components/SecurityAssessment.tsx">
+                                  <div className="font-medium text-sm line-clamp-2" data-id="5i2h45nq0" data-path="src/components/SecurityAssessment.tsx">
                                     {domain.name}
                                   </div>
-                                  <div className="flex items-center gap-2 mt-1">
-                                    <Progress value={progress} className="h-1 flex-1" />
+                                  <div className="flex items-center gap-2 mt-1" data-id="94dyz5mzx" data-path="src/components/SecurityAssessment.tsx">
+                                    <Progress value={progress} className="h-1 flex-1" data-id="lji0rqftw" data-path="src/components/SecurityAssessment.tsx" />
                                     {isComplete &&
-                                    <CheckCircle className="w-3 h-3 text-green-500" />
+                                    <CheckCircle className="w-3 h-3 text-green-500" data-id="sd25iw6k5" data-path="src/components/SecurityAssessment.tsx" />
                                     }
                                   </div>
                                 </div>
@@ -199,25 +216,26 @@ const SecurityAssessment: React.FC = () => {
               </div>
 
               {/* Domain Assessment */}
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3" data-id="arn48zbsh" data-path="src/components/SecurityAssessment.tsx">
                 <DomainAssessment
                   domain={securityDomains.find((d) => d.id === assessmentState.currentDomain)!}
                   answers={assessmentState.answers}
-                  onAnswerUpdate={updateAnswer} />
+                  onAnswerUpdate={updateAnswer} data-id="2ru5uq3w7" data-path="src/components/SecurityAssessment.tsx" />
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="results">
+          <TabsContent value="results" data-id="xoqdmgjzj" data-path="src/components/SecurityAssessment.tsx">
             <ResultsDashboard
               domains={securityDomains}
               answers={assessmentState.answers}
-              maturityLevel={currentMaturity} />
+              maturityLevel={currentMaturity} data-id="v5y1em3pd" data-path="src/components/SecurityAssessment.tsx" />
           </TabsContent>
 
-          <TabsContent value="recommendations">
+          <TabsContent value="recommendations" data-id="mlflbzhu9" data-path="src/components/SecurityAssessment.tsx">
             <RecommendationsView
-              assessmentState={assessmentState} />
+              recommendations={getRecommendations()}
+              answers={assessmentState.answers} data-id="bsjnlvgb6" data-path="src/components/SecurityAssessment.tsx" />
           </TabsContent>
         </Tabs>
       </div>
