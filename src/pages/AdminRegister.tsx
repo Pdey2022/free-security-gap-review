@@ -62,29 +62,29 @@ const AdminRegister = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4" data-id="de9lwntur" data-path="src/pages/AdminRegister.tsx">
-      <Card className="w-full max-w-md" data-id="tv1cecc7w" data-path="src/pages/AdminRegister.tsx">
-        <CardHeader className="text-center" data-id="r811slxps" data-path="src/pages/AdminRegister.tsx">
-          <div className="flex justify-center mb-4" data-id="ocvqwob7e" data-path="src/pages/AdminRegister.tsx">
-            <div className="bg-blue-600 p-3 rounded-full" data-id="qhz6ma2sc" data-path="src/pages/AdminRegister.tsx">
-              <Shield className="h-8 w-8 text-white" data-id="sq9arzk5c" data-path="src/pages/AdminRegister.tsx" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-blue-600 p-3 rounded-full">
+              <Shield className="h-8 w-8 text-white" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold" data-id="0tcl6ynt0" data-path="src/pages/AdminRegister.tsx">Admin Registration</CardTitle>
-          <CardDescription data-id="vudebhigh" data-path="src/pages/AdminRegister.tsx">
+          <CardTitle className="text-2xl font-bold">Admin Registration</CardTitle>
+          <CardDescription>
             Create an admin account to manage security recommendations
           </CardDescription>
         </CardHeader>
-        <CardContent data-id="oja7dm3g2" data-path="src/pages/AdminRegister.tsx">
-          <form onSubmit={handleRegister} className="space-y-4" data-id="xg4omycg9" data-path="src/pages/AdminRegister.tsx">
+        <CardContent>
+          <form onSubmit={handleRegister} className="space-y-4">
             {error &&
-            <Alert variant="destructive" data-id="f02g9jdw0" data-path="src/pages/AdminRegister.tsx">
-                <AlertDescription data-id="uglhsve8w" data-path="src/pages/AdminRegister.tsx">{error}</AlertDescription>
+            <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
               </Alert>
             }
             
-            <div className="space-y-2" data-id="zdnedypri" data-path="src/pages/AdminRegister.tsx">
-              <Label htmlFor="email" data-id="gjhlidrme" data-path="src/pages/AdminRegister.tsx">Email</Label>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -92,12 +92,12 @@ const AdminRegister = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={isLoading} data-id="y61rp128u" data-path="src/pages/AdminRegister.tsx" />
+                disabled={isLoading} />
 
             </div>
             
-            <div className="space-y-2" data-id="iksy7njn1" data-path="src/pages/AdminRegister.tsx">
-              <Label htmlFor="password" data-id="bcohlxxas" data-path="src/pages/AdminRegister.tsx">Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -106,12 +106,12 @@ const AdminRegister = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={isLoading}
-                minLength={6} data-id="rjms46cqy" data-path="src/pages/AdminRegister.tsx" />
+                minLength={6} />
 
             </div>
             
-            <div className="space-y-2" data-id="ve90ktw7f" data-path="src/pages/AdminRegister.tsx">
-              <Label htmlFor="confirmPassword" data-id="lh835bcna" data-path="src/pages/AdminRegister.tsx">Confirm Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -120,34 +120,34 @@ const AdminRegister = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 disabled={isLoading}
-                minLength={6} data-id="jd6puwsoo" data-path="src/pages/AdminRegister.tsx" />
+                minLength={6} />
 
             </div>
             
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading} data-id="dbu41wjtm" data-path="src/pages/AdminRegister.tsx">
+              disabled={isLoading}>
 
               {isLoading ?
-              <div className="flex items-center gap-2" data-id="gfln363kl" data-path="src/pages/AdminRegister.tsx">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" data-id="dxtqzoezp" data-path="src/pages/AdminRegister.tsx"></div>
+              <div className="flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                   Creating Account...
                 </div> :
 
-              <div className="flex items-center gap-2" data-id="a0i5tmb4l" data-path="src/pages/AdminRegister.tsx">
-                  <UserPlus className="h-4 w-4" data-id="0931piphx" data-path="src/pages/AdminRegister.tsx" />
+              <div className="flex items-center gap-2">
+                  <UserPlus className="h-4 w-4" />
                   Create Admin Account
                 </div>
               }
             </Button>
             
-            <div className="text-center" data-id="2e1d14cho" data-path="src/pages/AdminRegister.tsx">
+            <div className="text-center">
               <Button
                 type="button"
                 variant="link"
                 onClick={() => navigate('/admin/login')}
-                disabled={isLoading} data-id="mmols98zg" data-path="src/pages/AdminRegister.tsx">
+                disabled={isLoading}>
 
                 Already have an account? Sign in
               </Button>

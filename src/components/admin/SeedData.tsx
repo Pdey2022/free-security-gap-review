@@ -272,23 +272,23 @@ const SeedData = () => {
   };
 
   return (
-    <Card className="w-full max-w-md" data-id="869232gt6" data-path="src/components/admin/SeedData.tsx">
-      <CardHeader className="text-center" data-id="l9zu62yhh" data-path="src/components/admin/SeedData.tsx">
-        <div className="flex justify-center mb-2" data-id="8xabqxs0i" data-path="src/components/admin/SeedData.tsx">
-          <Database className="h-8 w-8 text-blue-600" data-id="6sdd4g2e1" data-path="src/components/admin/SeedData.tsx" />
+    <Card className="w-full max-w-md">
+      <CardHeader className="text-center">
+        <div className="flex justify-center mb-2">
+          <Database className="h-8 w-8 text-blue-600" />
         </div>
-        <CardTitle data-id="m9ijb6mhs" data-path="src/components/admin/SeedData.tsx">Seed Database</CardTitle>
+        <CardTitle>Seed Database</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4" data-id="246up1bkt" data-path="src/components/admin/SeedData.tsx">
+      <CardContent className="space-y-4">
         {seedingStatus === 'idle' &&
         <>
-            <p className="text-sm text-gray-600 text-center" data-id="jrx4uvlo9" data-path="src/components/admin/SeedData.tsx">
+            <p className="text-sm text-gray-600 text-center">
               Initialize the database with security recommendations
             </p>
             <Button
             onClick={seedDatabase}
             disabled={isSeeding}
-            className="w-full" data-id="73cvswfqj" data-path="src/components/admin/SeedData.tsx">
+            className="w-full">
 
               Seed Database
             </Button>
@@ -297,35 +297,35 @@ const SeedData = () => {
 
         {seedingStatus === 'seeding' &&
         <>
-            <div className="space-y-2" data-id="6p1i91m3x" data-path="src/components/admin/SeedData.tsx">
-              <div className="flex items-center justify-between text-sm" data-id="2937c9vo0" data-path="src/components/admin/SeedData.tsx">
-                <span data-id="phpgy44v4" data-path="src/components/admin/SeedData.tsx">Seeding recommendations...</span>
-                <span data-id="7pg89tu9k" data-path="src/components/admin/SeedData.tsx">{Math.round(progress)}%</span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span>Seeding recommendations...</span>
+                <span>{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="w-full" data-id="0h6nmc00m" data-path="src/components/admin/SeedData.tsx" />
+              <Progress value={progress} className="w-full" />
             </div>
           </>
         }
 
         {seedingStatus === 'success' &&
-        <div className="text-center space-y-2" data-id="04pnj334l" data-path="src/components/admin/SeedData.tsx">
-            <CheckCircle className="h-8 w-8 text-green-600 mx-auto" data-id="co9s0jqre" data-path="src/components/admin/SeedData.tsx" />
-            <p className="text-sm text-green-600 font-medium" data-id="vidywvitk" data-path="src/components/admin/SeedData.tsx">
+        <div className="text-center space-y-2">
+            <CheckCircle className="h-8 w-8 text-green-600 mx-auto" />
+            <p className="text-sm text-green-600 font-medium">
               Database seeded successfully!
             </p>
           </div>
         }
 
         {seedingStatus === 'error' &&
-        <div className="text-center space-y-2" data-id="pg08kbgvp" data-path="src/components/admin/SeedData.tsx">
-            <AlertCircle className="h-8 w-8 text-red-600 mx-auto" data-id="t4p81c812" data-path="src/components/admin/SeedData.tsx" />
-            <p className="text-sm text-red-600 font-medium" data-id="cbte69enq" data-path="src/components/admin/SeedData.tsx">
+        <div className="text-center space-y-2">
+            <AlertCircle className="h-8 w-8 text-red-600 mx-auto" />
+            <p className="text-sm text-red-600 font-medium">
               Seeding failed. Please try again.
             </p>
             <Button
             onClick={() => setSeedingStatus('idle')}
             variant="outline"
-            size="sm" data-id="54u3q6iu5" data-path="src/components/admin/SeedData.tsx">
+            size="sm">
 
               Try Again
             </Button>
