@@ -88,7 +88,7 @@ const Footer = () => {
         <div className="border-t border-slate-700 mt-8 pt-8" data-id="6si2zjyx5" data-path="src/components/Footer.tsx">
           <div className="flex flex-col md:flex-row justify-between items-center" data-id="swlhxa7z0" data-path="src/components/Footer.tsx">
             <p className="text-slate-400 text-sm" data-id="rwv22zlxh" data-path="src/components/Footer.tsx">
-              © 2024 CyberGuard Pro. All rights reserved.
+              © 2025 DeyLabs.co.uk. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0" data-id="wpnr72qo6" data-path="src/components/Footer.tsx">
               <a href="#" className="text-slate-400 hover:text-white text-sm transition-colors duration-200" data-id="0tmujuwov" data-path="src/components/Footer.tsx">

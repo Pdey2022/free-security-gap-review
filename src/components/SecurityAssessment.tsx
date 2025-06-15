@@ -118,7 +118,7 @@ const SecurityAssessment: React.FC = () => {
         {/* Header */}
         <div className="mb-8" data-id="xn2xs3sax" data-path="src/components/SecurityAssessment.tsx">
           <h1 className="text-4xl font-bold text-slate-900 mb-2" data-id="06w69vnmn" data-path="src/components/SecurityAssessment.tsx">
-            Security Maturity Assessment
+            Free - High Level Security Maturity Assessment
           </h1>
           <p className="text-lg text-slate-600" data-id="tt52hl532" data-path="src/components/SecurityAssessment.tsx">
             Comprehensive security review to identify maturity gaps and recommend mitigating technologies
