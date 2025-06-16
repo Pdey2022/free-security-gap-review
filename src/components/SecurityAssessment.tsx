@@ -176,9 +176,9 @@ const SecurityAssessment: React.FC = () => {
           </TabsList>
 
           <TabsContent value="assessment" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-[calc(100vh-400px)]">
-              {/* Domain Navigation - Fixed height and proper responsive design */}
-              <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 min-h-[calc(100vh-400px)]">
+              {/* Domain Navigation - Made wider from col-span-1 to col-span-2 */}
+              <div className="lg:col-span-2">
                 <Card className="h-full">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg">Security Domains</CardTitle>
@@ -226,7 +226,7 @@ const SecurityAssessment: React.FC = () => {
                 </Card>
               </div>
 
-              {/* Domain Assessment - Takes remaining space */}
+              {/* Domain Assessment - Adjusted to take remaining space (col-span-3) */}
               <div className="lg:col-span-3 min-h-0">
                 <DomainAssessment
                   domain={securityDomains.find((d) => d.id === assessmentState.currentDomain)!}
