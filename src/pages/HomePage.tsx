@@ -161,8 +161,8 @@ const HomePage = () => {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>);
+
 };
 
 export default HomePage;
