@@ -42,7 +42,7 @@ const AdminPanel: React.FC = () => {
       });
 
       if (error) throw error;
-      
+
       setRecommendations(data?.List || []);
     } catch (error) {
       console.error('Error loading recommendations:', error);
@@ -63,8 +63,8 @@ const AdminPanel: React.FC = () => {
       const { error } = await window.ezsite.apis.tableDelete(tableId, { ID: id });
       if (error) throw error;
 
-      setRecommendations(prev => prev.filter(rec => rec.ID !== id));
-      
+      setRecommendations((prev) => prev.filter((rec) => rec.ID !== id));
+
       toast({
         title: "Success",
         description: "Recommendation deleted successfully"
@@ -97,10 +97,10 @@ const AdminPanel: React.FC = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'high':return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium':return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low':return 'bg-green-100 text-green-800 border-green-200';
+      default:return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
@@ -109,8 +109,8 @@ const AdminPanel: React.FC = () => {
       <div className="text-center py-8">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <p className="text-gray-600">Loading admin panel...</p>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -156,8 +156,8 @@ const AdminPanel: React.FC = () => {
           </div>
 
           <div className="grid gap-4">
-            {recommendations.map((rec) => (
-              <Card key={rec.ID} className="hover:shadow-md transition-shadow">
+            {recommendations.map((rec) =>
+            <Card key={rec.ID} className="hover:shadow-md transition-shadow">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -184,40 +184,40 @@ const AdminPanel: React.FC = () => {
                         <span>{rec.recommendation_id}</span>
                       </div>
                       
-                      {rec.technologies && (
-                        <div className="mt-2">
+                      {rec.technologies &&
+                    <div className="mt-2">
                           <span className="text-sm font-medium text-gray-500">Technologies: </span>
                           <span className="text-sm text-gray-600">{rec.technologies}</span>
                         </div>
-                      )}
+                    }
                     </div>
                     
                     <div className="flex items-center gap-2 ml-4">
                       <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(rec)}
-                        className="text-blue-600 hover:text-blue-700"
-                      >
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(rec)}
+                      className="text-blue-600 hover:text-blue-700">
+
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(rec.ID)}
-                        className="text-red-600 hover:text-red-700"
-                      >
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(rec.ID)}
+                      className="text-red-600 hover:text-red-700">
+
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )}
           </div>
 
-          {recommendations.length === 0 && (
-            <Card>
+          {recommendations.length === 0 &&
+          <Card>
               <CardContent className="text-center py-8">
                 <Database className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No Recommendations</h3>
@@ -228,7 +228,7 @@ const AdminPanel: React.FC = () => {
                 </Button>
               </CardContent>
             </Card>
-          )}
+          }
         </TabsContent>
 
         <TabsContent value="settings" className="space-y-4">
@@ -276,15 +276,15 @@ const AdminPanel: React.FC = () => {
         </TabsContent>
       </Tabs>
 
-      {showForm && (
-        <AdminRecommendationForm
-          recommendation={editingRecommendation}
-          onClose={handleFormClose}
-          tableId={tableId}
-        />
-      )}
-    </div>
-  );
+      {showForm &&
+      <AdminRecommendationForm
+        recommendation={editingRecommendation}
+        onClose={handleFormClose}
+        tableId={tableId} />
+
+      }
+    </div>);
+
 };
 
 export default AdminPanel;

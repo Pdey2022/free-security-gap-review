@@ -18,8 +18,8 @@ const HomePage: React.FC = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
   // Redirect to login if not authenticated
@@ -39,8 +39,8 @@ const HomePage: React.FC = () => {
           </p>
         </div>
 
-        {isAdmin ? (
-          <Tabs defaultValue="assessment" className="w-full">
+        {isAdmin ?
+        <Tabs defaultValue="assessment" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="assessment" className="flex items-center gap-2">
                 <Shield className="h-4 w-4" />
@@ -59,9 +59,9 @@ const HomePage: React.FC = () => {
             <TabsContent value="admin">
               <AdminPanel />
             </TabsContent>
-          </Tabs>
-        ) : (
-          <div>
+          </Tabs> :
+
+        <div>
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -75,10 +75,10 @@ const HomePage: React.FC = () => {
             </Card>
             <SecurityAssessment />
           </div>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default HomePage;

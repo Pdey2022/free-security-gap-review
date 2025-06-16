@@ -9,8 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+  DropdownMenuTrigger } from
+'@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Header: React.FC = () => {
@@ -24,12 +24,12 @@ const Header: React.FC = () => {
   };
 
   const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((word) => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
+    return name.
+    split(' ').
+    map((word) => word.charAt(0)).
+    join('').
+    toUpperCase().
+    slice(0, 2);
   };
 
   // Don't show header on auth pages
@@ -61,27 +61,27 @@ const Header: React.FC = () => {
             <Link
               to="/"
               className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                location.pathname === '/' ? 'text-blue-600' : 'text-gray-700'
-              }`}
-            >
+              location.pathname === '/' ? 'text-blue-600' : 'text-gray-700'}`
+              }>
+
               Dashboard
             </Link>
-            {user && (
-              <>
+            {user &&
+            <>
                 <span className="text-sm text-gray-400">|</span>
                 <span className="text-sm text-gray-600">
                   {isAdmin ? 'Admin Portal' : 'Security Assessment'}
                 </span>
               </>
-            )}
+            }
           </nav>
 
           {/* User Actions */}
           <div className="flex items-center space-x-4">
-            {isLoading ? (
-              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
-            ) : user ? (
-              <DropdownMenu>
+            {isLoading ?
+            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div> :
+            user ?
+            <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
@@ -96,12 +96,12 @@ const Header: React.FC = () => {
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none flex items-center gap-2">
                         {user.Name}
-                        {isAdmin && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-100 to-blue-100 text-purple-800">
+                        {isAdmin &&
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-100 to-blue-100 text-purple-800">
                             <UserCheck className="w-3 h-3 mr-1" />
                             Admin
                           </span>
-                        )}
+                      }
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {user.Email}
@@ -110,15 +110,15 @@ const Header: React.FC = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   
-                  {isAdmin && (
-                    <>
+                  {isAdmin &&
+                <>
                       <DropdownMenuItem className="cursor-pointer">
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Admin Settings</span>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                     </>
-                  )}
+                }
                   
                   <DropdownMenuItem className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
@@ -126,16 +126,16 @@ const Header: React.FC = () => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    className="cursor-pointer text-red-600 focus:text-red-600"
-                    onClick={handleLogout}
-                  >
+                  className="cursor-pointer text-red-600 focus:text-red-600"
+                  onClick={handleLogout}>
+
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <div className="flex items-center space-x-2">
+              </DropdownMenu> :
+
+            <div className="flex items-center space-x-2">
                 <Button variant="ghost" asChild className="text-gray-700 hover:text-blue-600">
                   <Link to="/login">Sign In</Link>
                 </Button>
@@ -143,12 +143,12 @@ const Header: React.FC = () => {
                   <Link to="/register">Get Started</Link>
                 </Button>
               </div>
-            )}
+            }
           </div>
         </div>
       </div>
-    </header>
-  );
+    </header>);
+
 };
 
 export default Header;

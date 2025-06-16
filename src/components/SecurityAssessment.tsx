@@ -176,16 +176,16 @@ const SecurityAssessment: React.FC = () => {
           </TabsList>
 
           <TabsContent value="assessment" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Domain Navigation - Made taller */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-[calc(100vh-400px)]">
+              {/* Domain Navigation - Fixed height and proper responsive design */}
               <div className="lg:col-span-1">
-                <Card>
-                  <CardHeader>
+                <Card className="h-full">
+                  <CardHeader className="pb-3">
                     <CardTitle className="text-lg">Security Domains</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0">
-                    <ScrollArea className="h-[800px]">
-                      <div className="space-y-1 p-4">
+                  <CardContent className="p-0 flex flex-col h-[calc(100%-80px)]">
+                    <ScrollArea className="flex-1 px-4">
+                      <div className="space-y-2 pb-4">
                         {securityDomains.map((domain) => {
                           const progress = getDomainProgress(domain.id);
                           const isComplete = progress === 100;
@@ -201,16 +201,19 @@ const SecurityAssessment: React.FC = () => {
                               onClick={() => setCurrentDomain(domain.id)}>
 
                               <div className="flex items-start gap-3 w-full">
-                                <span className="text-lg">{domain.icon}</span>
-                                <div className="flex-1 min-w-0">
-                                  <div className="font-medium text-sm line-clamp-2">
+                                <span className="text-lg flex-shrink-0">{domain.icon}</span>
+                                <div className="flex-1 min-w-0 space-y-2">
+                                  <div className="font-medium text-sm leading-tight">
                                     {domain.name}
                                   </div>
-                                  <div className="flex items-center gap-2 mt-1">
+                                  <div className="flex items-center gap-2">
                                     <Progress value={progress} className="h-1 flex-1" />
                                     {isComplete &&
-                                    <CheckCircle className="w-3 h-3 text-green-500" />
+                                    <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
                                     }
+                                  </div>
+                                  <div className="text-xs opacity-75">
+                                    {Math.round(progress)}% complete
                                   </div>
                                 </div>
                               </div>
@@ -223,8 +226,8 @@ const SecurityAssessment: React.FC = () => {
                 </Card>
               </div>
 
-              {/* Domain Assessment */}
-              <div className="lg:col-span-3">
+              {/* Domain Assessment - Takes remaining space */}
+              <div className="lg:col-span-3 min-h-0">
                 <DomainAssessment
                   domain={securityDomains.find((d) => d.id === assessmentState.currentDomain)!}
                   answers={assessmentState.answers}

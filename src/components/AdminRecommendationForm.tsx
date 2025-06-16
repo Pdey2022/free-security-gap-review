@@ -61,24 +61,24 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
   }, [recommendation]);
 
   const domains = [
-    'Access Control',
-    'Incident Response',
-    'Network Security',
-    'Data Protection',
-    'Risk Management',
-    'Security Awareness',
-    'Asset Management',
-    'Vulnerability Management',
-    'Security Operations',
-    'Business Continuity'
-  ];
+  'Access Control',
+  'Incident Response',
+  'Network Security',
+  'Data Protection',
+  'Risk Management',
+  'Security Awareness',
+  'Asset Management',
+  'Vulnerability Management',
+  'Security Operations',
+  'Business Continuity'];
+
 
   const effortOptions = [
-    'Low (1-2 weeks)',
-    'Medium (1-3 months)',
-    'High (3-6 months)',
-    'Very High (6+ months)'
-  ];
+  'Low (1-2 weeks)',
+  'Medium (1-3 months)',
+  'High (3-6 months)',
+  'Very High (6+ months)'];
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,8 +91,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
       }
 
       // Generate recommendation ID if not provided
-      const recId = formData.recommendation_id || 
-        `REC-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+      const recId = formData.recommendation_id ||
+      `REC-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
 
       const payload = {
         ...formData,
@@ -106,7 +106,7 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
           ...payload
         });
         if (error) throw error;
-        
+
         toast({
           title: "Success",
           description: "Recommendation updated successfully"
@@ -115,7 +115,7 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
         // Create new recommendation
         const { error } = await window.ezsite.apis.tableCreate(tableId, payload);
         if (error) throw error;
-        
+
         toast({
           title: "Success",
           description: "Recommendation created successfully"
@@ -136,7 +136,7 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
   };
 
   const handleInputChange = (field: string, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [field]: value
     }));
@@ -162,8 +162,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                     value={formData.title}
                     onChange={(e) => handleInputChange('title', e.target.value)}
                     placeholder="Enter recommendation title"
-                    required
-                  />
+                    required />
+
                 </div>
                 
                 <div>
@@ -172,8 +172,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                     id="recommendation_id"
                     value={formData.recommendation_id}
                     onChange={(e) => handleInputChange('recommendation_id', e.target.value)}
-                    placeholder="Auto-generated if empty"
-                  />
+                    placeholder="Auto-generated if empty" />
+
                 </div>
               </div>
 
@@ -185,8 +185,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="Detailed description of the recommendation"
                   rows={4}
-                  required
-                />
+                  required />
+
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -194,8 +194,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                   <Label htmlFor="priority">Priority</Label>
                   <Select
                     value={formData.priority}
-                    onValueChange={(value) => handleInputChange('priority', value)}
-                  >
+                    onValueChange={(value) => handleInputChange('priority', value)}>
+
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -211,17 +211,17 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                   <Label htmlFor="domain">Domain *</Label>
                   <Select
                     value={formData.domain}
-                    onValueChange={(value) => handleInputChange('domain', value)}
-                  >
+                    onValueChange={(value) => handleInputChange('domain', value)}>
+
                     <SelectTrigger>
                       <SelectValue placeholder="Select domain" />
                     </SelectTrigger>
                     <SelectContent>
-                      {domains.map(domain => (
-                        <SelectItem key={domain} value={domain}>
+                      {domains.map((domain) =>
+                      <SelectItem key={domain} value={domain}>
                           {domain}
                         </SelectItem>
-                      ))}
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
@@ -230,17 +230,17 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                   <Label htmlFor="effort">Effort</Label>
                   <Select
                     value={formData.effort}
-                    onValueChange={(value) => handleInputChange('effort', value)}
-                  >
+                    onValueChange={(value) => handleInputChange('effort', value)}>
+
                     <SelectTrigger>
                       <SelectValue placeholder="Select effort" />
                     </SelectTrigger>
                     <SelectContent>
-                      {effortOptions.map(effort => (
-                        <SelectItem key={effort} value={effort}>
+                      {effortOptions.map((effort) =>
+                      <SelectItem key={effort} value={effort}>
                           {effort}
                         </SelectItem>
-                      ))}
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
@@ -253,16 +253,16 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
                   value={formData.technologies}
                   onChange={(e) => handleInputChange('technologies', e.target.value)}
                   placeholder="List recommended technologies, tools, or solutions"
-                  rows={2}
-                />
+                  rows={2} />
+
               </div>
 
               <div className="flex items-center space-x-2">
                 <Switch
                   id="is_active"
                   checked={formData.is_active}
-                  onCheckedChange={(checked) => handleInputChange('is_active', checked)}
-                />
+                  onCheckedChange={(checked) => handleInputChange('is_active', checked)} />
+
                 <Label htmlFor="is_active">Active Recommendation</Label>
               </div>
             </CardContent>
@@ -280,8 +280,8 @@ const AdminRecommendationForm: React.FC<AdminRecommendationFormProps> = ({
           </div>
         </form>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 };
 
 export default AdminRecommendationForm;
