@@ -85,8 +85,8 @@ const RecommendationsView: React.FC<RecommendationsViewProps> = ({
           domains={domains}
           answers={answers}
           maturityLevel={currentMaturity}
-          recommendations={recommendations}
-        />
+          recommendations={recommendations} />
+
       </div>
 
       {/* NIST Maturity Chart */}

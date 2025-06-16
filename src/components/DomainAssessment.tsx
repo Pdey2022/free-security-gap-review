@@ -158,21 +158,21 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
         })}
 
         {/* Next Domain Button - Only show if questions are complete and not last domain */}
-        {isComplete && !isLastDomain && onNext && (
-          <div className="flex justify-end pt-6 border-t">
-            <Button 
-              onClick={onNext}
-              className="flex items-center gap-2"
-              size="lg">
+        {isComplete && !isLastDomain && onNext &&
+        <div className="flex justify-end pt-6 border-t">
+            <Button
+            onClick={onNext}
+            className="flex items-center gap-2"
+            size="lg">
               Next Domain
               <ChevronRight className="w-4 h-4" />
             </Button>
           </div>
-        )}
+        }
 
         {/* Assessment Complete Message for last domain */}
-        {isComplete && isLastDomain && (
-          <div className="flex justify-center pt-6 border-t">
+        {isComplete && isLastDomain &&
+        <div className="flex justify-center pt-6 border-t">
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 text-green-600 mb-2">
                 <Check className="w-5 h-5" />
@@ -183,7 +183,7 @@ const DomainAssessment: React.FC<DomainAssessmentProps> = ({
               </p>
             </div>
           </div>
-        )}
+        }
       </CardContent>
     </Card>);
 
