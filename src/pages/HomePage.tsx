@@ -1,84 +1,71 @@
-import React from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { Navigate } from 'react-router-dom';
-import SecurityAssessment from '@/components/SecurityAssessment';
-import AdminPanel from '@/components/AdminPanel';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Settings } from 'lucide-react';
+import React from 'react'
+import SecurityAssessment from '@/components/SecurityAssessment'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Shield, Target, TrendingUp } from 'lucide-react'
 
 const HomePage: React.FC = () => {
-  const { user, isLoading, isAdmin } = useAuth();
-
-  // Show loading state
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>);
-
-  }
-
-  // Redirect to login if not authenticated
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user.Name}!
-          </h1>
-          <p className="text-gray-600">
-            Manage your security assessments and recommendations
-          </p>
-        </div>
-
-        {isAdmin ?
-        <Tabs defaultValue="assessment" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="assessment" className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Security Assessment
-              </TabsTrigger>
-              <TabsTrigger value="admin" className="flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                Admin Panel
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="assessment">
-              <SecurityAssessment />
-            </TabsContent>
-            
-            <TabsContent value="admin">
-              <AdminPanel />
-            </TabsContent>
-          </Tabs> :
-
-        <div>
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
-                  Security Assessment Portal
-                </CardTitle>
-                <CardDescription>
-                  Evaluate your organization's cybersecurity posture with our comprehensive assessment tool
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <SecurityAssessment />
-          </div>
-        }
+    <div className="container mx-auto px-4 py-8">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          Cybersecurity Risk Assessment
+        </h1>
+        <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          Evaluate your organization's security posture with our comprehensive assessment tool
+        </p>
       </div>
-    </div>);
 
-};
+      {/* Feature highlights */}
+      <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Shield className="h-5 w-5 text-blue-400" />
+              Comprehensive Assessment
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Evaluate all critical security domains in your organization
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Target className="h-5 w-5 text-green-400" />
+              NIST Framework
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Based on industry-standard NIST Cybersecurity Framework
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <TrendingUp className="h-5 w-5 text-purple-400" />
+              Actionable Insights
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Get detailed recommendations to improve your security posture
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
 
-export default HomePage;
+      <Tabs defaultValue="assessment" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-1">
+          <TabsTrigger value="assessment">Security Assessment</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="assessment" className="space-y-4">
+          <SecurityAssessment />
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}
+
+export default HomePage
