@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       const { error } = await window.ezsite.apis.login({ email, password });
-      
+
       if (error) {
         throw new Error(error);
       }
@@ -74,16 +74,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       setUser(userData);
       setIsAdmin(isAdminLogin || userData.Email.includes('admin') || userData.Email.endsWith('@admin.com'));
-      
+
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${userData.Name}!`,
+        description: `Welcome back, ${userData.Name}!`
       });
     } catch (error) {
       toast({
         title: "Login Failed",
         description: error instanceof Error ? error.message : "Please check your credentials and try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
       throw error;
     } finally {
@@ -95,20 +95,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       const { error } = await window.ezsite.apis.register({ email, password });
-      
+
       if (error) {
         throw new Error(error);
       }
 
       toast({
         title: "Registration Successful",
-        description: "Please check your email to verify your account.",
+        description: "Please check your email to verify your account."
       });
     } catch (error) {
       toast({
         title: "Registration Failed",
         description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
       throw error;
     } finally {
@@ -122,19 +122,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (error) {
         throw new Error(error);
       }
-      
+
       setUser(null);
       setIsAdmin(false);
-      
+
       toast({
         title: "Logged Out",
-        description: "You have been successfully logged out.",
+        description: "You have been successfully logged out."
       });
     } catch (error) {
       toast({
         title: "Logout Failed",
         description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
@@ -145,16 +145,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (error) {
         throw new Error(error);
       }
-      
+
       toast({
         title: "Reset Email Sent",
-        description: "Please check your email for password reset instructions.",
+        description: "Please check your email for password reset instructions."
       });
     } catch (error) {
       toast({
         title: "Failed to Send Reset Email",
         description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
       throw error;
     }
@@ -166,16 +166,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (error) {
         throw new Error(error);
       }
-      
+
       toast({
         title: "Password Reset Successful",
-        description: "Your password has been updated successfully.",
+        description: "Your password has been updated successfully."
       });
     } catch (error) {
       toast({
         title: "Password Reset Failed",
         description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
       throw error;
     }
@@ -189,12 +189,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     register,
     logout,
     sendResetEmail,
-    resetPassword,
+    resetPassword
   };
 
   return (
     <AuthContext.Provider value={value}>
       {children}
-    </AuthContext.Provider>
-  );
+    </AuthContext.Provider>);
+
 };

@@ -15,14 +15,14 @@ const RegisterPage: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -92,13 +92,13 @@ const RegisterPage: React.FC = () => {
                 Please check your email to verify your account. You'll be redirected to the login page shortly.
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-gradient-to-r from-green-600 to-blue-600 h-2 rounded-full animate-pulse" style={{width: '100%'}}></div>
+                <div className="bg-gradient-to-r from-green-600 to-blue-600 h-2 rounded-full animate-pulse" style={{ width: '100%' }}></div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -120,12 +120,12 @@ const RegisterPage: React.FC = () => {
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
+            {error &&
+            <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
-            )}
+            }
 
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
@@ -139,8 +139,8 @@ const RegisterPage: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 className="h-11"
-                required
-              />
+                required />
+
             </div>
 
             <div className="space-y-2">
@@ -155,8 +155,8 @@ const RegisterPage: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 className="h-11"
-                required
-              />
+                required />
+
             </div>
 
             <div className="space-y-2">
@@ -171,8 +171,8 @@ const RegisterPage: React.FC = () => {
                 value={formData.password}
                 onChange={handleInputChange}
                 className="h-11"
-                required
-              />
+                required />
+
             </div>
 
             <div className="space-y-2">
@@ -187,32 +187,32 @@ const RegisterPage: React.FC = () => {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 className="h-11"
-                required
-              />
+                required />
+
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
+              disabled={isLoading}>
+
+              {isLoading ?
+              <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Creating Account...
-                </>
-              ) : (
-                'Create Account'
-              )}
+                </> :
+
+              'Create Account'
+              }
             </Button>
 
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Already have an account?{' '}
-                <Link 
-                  to="/login" 
-                  className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
-                >
+                <Link
+                  to="/login"
+                  className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
+
                   Sign in here
                 </Link>
               </p>
@@ -220,8 +220,8 @@ const RegisterPage: React.FC = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };
 
 export default RegisterPage;

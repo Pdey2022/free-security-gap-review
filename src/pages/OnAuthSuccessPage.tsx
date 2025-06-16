@@ -57,12 +57,12 @@ const OnAuthSuccessPage: React.FC = () => {
               </div>
 
               <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                <div 
+                <div
                   className="bg-gradient-to-r from-green-600 to-blue-600 h-2 rounded-full transition-all duration-1000 ease-out"
                   style={{
-                    width: `${((5 - countdown) / 5) * 100}%`
-                  }}
-                ></div>
+                    width: `${(5 - countdown) / 5 * 100}%`
+                  }}>
+                </div>
               </div>
             </div>
 
@@ -72,8 +72,8 @@ const OnAuthSuccessPage: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };
 
 export default OnAuthSuccessPage;

@@ -1,20 +1,20 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Toaster } from '@/components/ui/toaster'
-import { TooltipProvider } from '@/components/ui/tooltip'
-import { AuthProvider } from '@/context/AuthContext'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { AuthProvider } from '@/context/AuthContext';
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import HomePage from '@/pages/HomePage'
-import LoginPage from '@/pages/LoginPage'
-import RegisterPage from '@/pages/RegisterPage'
-import ForgotPasswordPage from '@/pages/ForgotPasswordPage'
-import ResetPasswordPage from '@/pages/ResetPasswordPage'
-import OnAuthSuccessPage from '@/pages/OnAuthSuccessPage'
-import NotFound from '@/pages/NotFound'
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import HomePage from '@/pages/HomePage';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
+import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
+import ResetPasswordPage from '@/pages/ResetPasswordPage';
+import OnAuthSuccessPage from '@/pages/OnAuthSuccessPage';
+import NotFound from '@/pages/NotFound';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -41,8 +41,8 @@ function App() {
           </Router>
         </AuthProvider>
       </TooltipProvider>
-    </QueryClientProvider>
-  )
+    </QueryClientProvider>);
+
 }
 
-export default App
+export default App;

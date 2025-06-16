@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Shield, LogOut, User, UserCheck } from 'lucide-react';
+import { Shield, LogOut, User, UserCheck, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import {
@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
@@ -20,13 +20,13 @@ const Header: React.FC = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate('/login');
   };
 
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map(word => word.charAt(0))
+      .map((word) => word.charAt(0))
       .join('')
       .toUpperCase()
       .slice(0, 2);
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
 
   // Don't show header on auth pages
   const isAuthPage = ['/login', '/register', '/forgot-password', '/resetpassword', '/onauthsuccess'].includes(location.pathname);
-  
+
   if (isAuthPage) {
     return null;
   }
@@ -58,8 +58,8 @@ const Header: React.FC = () => {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className={`text-sm font-medium transition-colors hover:text-blue-600 ${
                 location.pathname === '/' ? 'text-blue-600' : 'text-gray-700'
               }`}
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               <>
                 <span className="text-sm text-gray-400">|</span>
                 <span className="text-sm text-gray-600">
-                  Assessments
+                  {isAdmin ? 'Admin Portal' : 'Security Assessment'}
                 </span>
               </>
             )}
@@ -109,12 +109,23 @@ const Header: React.FC = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Admin Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
+                  
                   <DropdownMenuItem className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     className="cursor-pointer text-red-600 focus:text-red-600"
                     onClick={handleLogout}
                   >

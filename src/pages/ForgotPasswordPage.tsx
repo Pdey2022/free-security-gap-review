@@ -66,8 +66,8 @@ const ForgotPasswordPage: React.FC = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -89,12 +89,12 @@ const ForgotPasswordPage: React.FC = () => {
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
+            {error &&
+            <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
-            )}
+            }
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
@@ -111,33 +111,33 @@ const ForgotPasswordPage: React.FC = () => {
                   if (error) setError('');
                 }}
                 className="h-11"
-                required
-              />
+                required />
+
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
+              disabled={isLoading}>
+
+              {isLoading ?
+              <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Sending Email...
-                </>
-              ) : (
-                <>
+                </> :
+
+              <>
                   <Mail className="mr-2 h-4 w-4" />
                   Send Reset Link
                 </>
-              )}
+              }
             </Button>
 
             <div className="text-center">
-              <Link 
-                to="/login" 
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline inline-flex items-center"
-              >
+              <Link
+                to="/login"
+                className="text-sm text-blue-600 hover:text-blue-700 hover:underline inline-flex items-center">
+
                 <ArrowLeft className="mr-1 h-3 w-3" />
                 Back to Login
               </Link>
@@ -145,8 +145,8 @@ const ForgotPasswordPage: React.FC = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ForgotPasswordPage;

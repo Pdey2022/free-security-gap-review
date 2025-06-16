@@ -15,13 +15,13 @@ const LoginPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('user');
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    password: ''
   });
   const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -76,12 +76,12 @@ const LoginPage: React.FC = () => {
             </TabsList>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
+              {error &&
+              <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
-              )}
+              }
 
               <TabsContent value="user" className="space-y-4 mt-0">
                 <div className="space-y-2">
@@ -96,8 +96,8 @@ const LoginPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="h-11"
-                    required
-                  />
+                    required />
+
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-sm font-medium">
@@ -111,8 +111,8 @@ const LoginPage: React.FC = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     className="h-11"
-                    required
-                  />
+                    required />
+
                 </div>
               </TabsContent>
 
@@ -129,8 +129,8 @@ const LoginPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="h-11"
-                    required
-                  />
+                    required />
+
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="admin-password" className="text-sm font-medium">
@@ -144,52 +144,52 @@ const LoginPage: React.FC = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     className="h-11"
-                    required
-                  />
+                    required />
+
                 </div>
               </TabsContent>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
+                disabled={isLoading}>
+
+                {isLoading ?
+                <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Signing In...
-                  </>
-                ) : (
-                  'Sign In'
-                )}
+                  </> :
+
+                'Sign In'
+                }
               </Button>
 
               <div className="text-center space-y-2">
-                <Link 
-                  to="/forgot-password" 
-                  className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
-                >
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-blue-600 hover:text-blue-700 hover:underline">
+
                   Forgot your password?
                 </Link>
                 
-                {activeTab === 'user' && (
-                  <p className="text-sm text-gray-600">
+                {activeTab === 'user' &&
+                <p className="text-sm text-gray-600">
                     Don't have an account?{' '}
-                    <Link 
-                      to="/register" 
-                      className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
-                    >
+                    <Link
+                    to="/register"
+                    className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
+
                       Sign up here
                     </Link>
                   </p>
-                )}
+                }
               </div>
             </form>
           </Tabs>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };
 
 export default LoginPage;
